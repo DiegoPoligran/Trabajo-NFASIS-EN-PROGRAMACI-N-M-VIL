@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huellas Pro | Panel de Administración</title>
+
+    <!-- Preconexiones a Google Fonts para optimizar el rendimiento de carga de fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Importa la fuente "Inter" de Google Fonts con múltiples pesos (300, 400, 500, 600, 700, 800) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Importa Font Awesome 6.4.0 - librería de iconos usada en el sitio -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Esta es la vinculación del archivo styles.css que contiene todos los estilos personalizados de la plataforma -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Configuración de Tailwind CSS personalizada para mantener la coherencia visual con la marca -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            blue: '#00A3FF',
+                            dark: '#0B132B',
+                            light: '#FAFAFA',
+                            gray: '#F8FAFC',
+                            text: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen flex flex-col" data-page="admin-dashboard">
+    <!-- SECCIÓN DE NAVEGACIÓN: Contiene el logo, enlaces principales y controles de sesión -->
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="Inicio.html" class="flex items-center gap-2 cursor-pointer">
+                <div class="bg-brand-blue text-white p-1.5 rounded-md text-sm">
+                    <i class="fa-solid fa-paw"></i>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight text-brand-dark">
+                    HUELLAS<span class="text-brand-blue italic font-extrabold">PRO</span>
+                </h1>
+            </a>
+
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="Inicio.html" data-page-link="inicio" class="nav-btn text-gray-500 hover:text-brand-dark transition">Inicio</a>
+                <a href="Adopciones.html" data-page-link="adopciones" class="nav-btn text-gray-500 hover:text-brand-dark transition">Adopciones</a>
+                <a href="Eventos.html" data-page-link="eventos" class="nav-btn text-gray-500 hover:text-brand-dark transition">Eventos</a>
+                <a href="Comunidad.html" data-page-link="comunidad" class="nav-btn text-gray-500 hover:text-brand-dark transition">Comunidad</a>
+                <a href="Educación.html" data-page-link="educacion" class="nav-btn text-gray-500 hover:text-brand-dark transition">Educación</a>
+            </div>
+
+            <div class="flex items-center gap-4 text-sm font-medium">
+                <span id="user-info" class="text-gray-500"></span>
+                <button id="logout-btn" class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition">
+                    Cerrar Sesión
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL: Envuelve todas las herramientas de administración -->
+    <main class="flex-1 w-full">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <!-- ENCABEZADO DEL DASHBOARD: Título descriptivo de la sección actual -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-brand-dark mb-2">Panel de Administración</h1>
+                <p class="text-gray-600">Gestiona usuarios, refugios y configuraciones del sistema.</p>
+            </div>
+            
+            <!-- TARJETAS DE ESTADÍSTICAS: Resumen rápido del total de usuarios por rol -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="bg-blue-100 p-3 rounded-full">
+                            <i class="fa-solid fa-users text-blue-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-brand-dark">Total Usuarios</h3>
+                            <p id="total-users" class="text-2xl font-bold text-brand-blue">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="bg-green-100 p-3 rounded-full">
+                            <i class="fa-solid fa-home text-green-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-brand-dark">Refugios</h3>
+                            <p id="total-refugios" class="text-2xl font-bold text-green-600">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center">
+                        <div class="bg-purple-100 p-3 rounded-full">
+                            <i class="fa-solid fa-cog text-purple-600"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-lg font-semibold text-brand-dark">Administradores</h3>
+                            <p id="total-admins" class="text-2xl font-bold text-purple-600">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SECCIÓN DE TABLA: Listado interactivo de todas las cuentas registradas en el sistema -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="p-6 border-b border-gray-200">
+                    <h2 class="text-xl font-bold text-brand-dark">Gestión de Cuentas</h2>
+                    <p class="text-gray-600 mt-1">Visualiza y administra todas las cuentas registradas en la plataforma.</p>
+                </div>
+                <div class="p-6">
+                    <div class="overflow-x-auto">
+                        <table id="users-table" class="w-full table-auto">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Correo</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha Registro</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-tbody" class="bg-white divide-y divide-gray-200">
+                                <!-- Los usuarios se cargarán aquí -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL DE EDICIÓN: Ventana emergente para actualizar contraseñas de usuarios -->
+    <div id="edit-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+            <h3 class="text-lg font-bold text-brand-dark mb-4">Cambiar Contraseña</h3>
+            <form id="edit-form">
+                <input type="hidden" id="edit-user-id">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nueva Contraseña</label>
+                    <input type="password" id="new-password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-blue" required>
+                </div>
+                <div class="flex justify-end gap-3">
+                    <button type="button" id="cancel-edit" class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 bg-brand-blue text-white rounded-md hover:bg-blue-600">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPTS DE LÓGICA: Controladores JavaScript específicos para las funciones de administración -->
+    <script src="app.js"></script>
+    <script>
+        // Lógica principal del dashboard de administración
+        document.addEventListener('DOMContentLoaded', () => {
+            if (checkAdminAccess()) {
+                loadDashboardData();
+            }
+            setupEventListeners();
+        });
+
+        function checkAdminAccess() {
+            const session = getSession();
+            if (!session || session.rol_usuario !== 'admin') {
+                window.location.href = 'LoginYUnete.html';
+                return false;
+            }
+            const userInfo = document.getElementById('user-info');
+            if (userInfo) {
+                userInfo.textContent = `Hola, ${session.nombre_completo || 'Administrador'}`;
+            }
+            return true;
+        }
+
+        function loadDashboardData() {
+            const db = readDb();
+            const users = db.usuario;
+
+            // Actualizar estadísticas
+            document.getElementById('total-users').textContent = users.filter(u => u.rol_usuario === 'usuario').length;
+            document.getElementById('total-refugios').textContent = users.filter(u => u.rol_usuario === 'refugio').length;
+            document.getElementById('total-admins').textContent = users.filter(u => u.rol_usuario === 'admin').length;
+
+            // Poblar la tabla
+            const tbody = document.getElementById('users-tbody');
+            tbody.innerHTML = '';
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">${user.nombre_completo}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">${user.correo_electronico}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">${ROLE_LABELS[user.rol_usuario]}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${user.estado_cuenta === 'activo' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                            ${user.estado_cuenta}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">${user.fecha_registro}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
+                        <button class="text-blue-600 hover:text-blue-900 mr-3 edit-btn" data-user-id="${user.ID_usuario}">Cambiar Contraseña</button>
+                        <button class="text-red-600 hover:text-red-900 delete-btn" data-user-id="${user.ID_usuario}">Eliminar</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function setupEventListeners() {
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    clearSession();
+                    window.location.href = 'Inicio.html';
+                });
+            }
+
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('edit-btn')) {
+                    const userId = e.target.dataset.userId;
+                    openEditModal(userId);
+                }
+                if (e.target.classList.contains('delete-btn')) {
+                    const userId = e.target.dataset.userId;
+                    deleteUser(userId);
+                }
+            });
+
+            const editForm = document.getElementById('edit-form');
+            if (editForm) {
+                editForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const userId = document.getElementById('edit-user-id').value;
+                    const newPassword = document.getElementById('new-password').value;
+                    updatePassword(userId, newPassword);
+                    closeEditModal();
+                });
+            }
+
+            const cancelEdit = document.getElementById('cancel-edit');
+            if (cancelEdit) {
+                cancelEdit.addEventListener('click', closeEditModal);
+            }
+        }
+
+        function openEditModal(userId) {
+            document.getElementById('edit-user-id').value = userId;
+            document.getElementById('new-password').value = '';
+            document.getElementById('edit-modal').classList.remove('hidden');
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-modal').classList.add('hidden');
+        }
+
+        function updatePassword(userId, newPassword) {
+            const db = readDb();
+            const credential = db.credenciales_seguridad.find(c => c.ID_usuario === userId);
+            if (credential) {
+                credential.contrasena_hash = encodeCredential(newPassword);
+                saveDb(db);
+                alert('Contraseña actualizada correctamente.');
+                loadDashboardData();
+            }
+        }
+
+        function deleteUser(userId) {
+            if (confirm('¿Estás seguro de que quieres eliminar esta cuenta? Esta acción no se puede deshacer.')) {
+                const db = readDb();
+                // Eliminar usuario
+                db.usuario = db.usuario.filter(u => u.ID_usuario !== userId);
+                // Eliminar datos relacionados
+                db.perfiles_usuario = db.perfiles_usuario.filter(p => p.ID_usuario !== userId);
+                db.credenciales_seguridad = db.credenciales_seguridad.filter(c => c.ID_usuario !== userId);
+                db.historial_actividad = db.historial_actividad.filter(h => h.ID_usuario !== userId);
+                db.notificaciones = db.notificaciones.filter(n => n.ID_usuario !== userId);
+                db.configuracion_cuenta = db.configuracion_cuenta.filter(c => c.ID_usuario !== userId);
+                // Eliminar solicitudes de adopción
+                db.solicitudes_adopcion = db.solicitudes_adopcion.filter(s => s.ID_usuario !== userId);
+                // Eliminar animales si es un refugio
+                db.animales_adopcion = db.animales_adopcion.filter(a => a.ID_refugio !== userId);
+
+                saveDb(db);
+                alert('Cuenta eliminada correctamente.');
+                loadDashboardData();
+            }
+        }
+    </script>
+</body>
+</html>

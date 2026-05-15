@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huellas Pro | Eventos</title>
+
+    <!-- Preconexiones a Google Fonts para optimizar el rendimiento de carga de fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Importa la fuente "Inter" de Google Fonts con múltiples pesos (300, 400, 500, 600, 700, 800) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Importa Font Awesome 6.4.0 - librería de iconos usada en el sitio -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Esta es la vinculación del archivo styles.css que contiene todos los estilos personalizados de la plataforma -->
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            blue: '#00A3FF',
+                            dark: '#0B132B',
+                            light: '#FAFAFA',
+                            gray: '#F8FAFC',
+                            text: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+
+</head>
+<body class="min-h-screen flex flex-col" data-page="eventos">
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="Inicio.html" class="flex items-center gap-2 cursor-pointer">
+                <div class="bg-brand-blue text-white p-1.5 rounded-md text-sm">
+                    <i class="fa-solid fa-paw"></i>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight text-brand-dark">
+                    HUELLAS<span class="text-brand-blue italic font-extrabold">PRO</span>
+                </h1>
+            </a>
+
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="Inicio.html" data-page-link="inicio" class="nav-btn text-gray-500 hover:text-brand-dark transition">Inicio</a>
+                <a href="Adopciones.html" data-page-link="adopciones" class="nav-btn text-gray-500 hover:text-brand-dark transition">Adopciones</a>
+                <a href="Eventos.html" data-page-link="eventos" class="nav-btn text-gray-500 hover:text-brand-dark transition">Eventos</a>
+                <a href="Comunidad.html" data-page-link="comunidad" class="nav-btn text-gray-500 hover:text-brand-dark transition">Comunidad</a>
+                <a href="Educación.html" data-page-link="educacion" class="nav-btn text-gray-500 hover:text-brand-dark transition">Educación</a>
+            </div>
+
+            <div class="flex items-center gap-4 text-sm font-medium">
+                <a href="LoginYUnete.html" data-page-link="login" class="nav-btn text-gray-400 hover:text-gray-800 transition">LOGIN</a>
+                <a href="LoginYUnete.html#unete" class="bg-brand-dark text-white px-5 py-2 rounded-full hover:bg-gray-800 transition shadow-sm">
+                    ÚNETE
+                </a>
+                <div data-lang-toggle class="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-md text-xs cursor-pointer border border-gray-100">
+                    <span class="lang-text">ES</span> <i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 w-full relative">
+        <!-- SECCIÓN DE EVENTOS: Rejilla de contenidos dividida en Campañas, Noticias y Eventos -->
+        <section class="max-w-7xl mx-auto px-6 py-10">
+            <!-- ENCABEZADO: Título y descripción breve de la sección -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-brand-dark">Eventos de Bienestar</h2>
+                <p class="text-gray-500 text-sm">Campañas, noticias y eventos con acceso diferenciado por rol.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-[2.5rem] p-4 shadow-sm border border-gray-100">
+                    <div class="flex items-center justify-between gap-3 px-2 mb-4">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-brand-blue shrink-0">
+                                <i class="fa-solid fa-hand-holding-heart"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-brand-dark text-sm leading-tight">seccion_campanas</h3>
+                                <p class="text-[10px] text-gray-400">desc_campanas</p>
+                            </div>
+                        </div>
+                        <button type="button" class="event-create-trigger hidden" data-requires-permission="campaigns:create" data-open-content-modal="campana">Crear</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="space-y-4" data-campaigns-list></div>
+                        <div class="bg-brand-gray rounded-[1.5rem] p-2 pb-4">
+                            <div class="h-32 bg-gray-200 rounded-xl mb-3 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover">
+                            </div>
+                            <div class="px-2">
+                                <div class="flex justify-between items-start mb-1">
+                                    <h4 class="font-bold text-brand-dark text-sm">Campaña de Alimentos</h4>
+                                    <span class="text-[8px] bg-blue-100 text-brand-blue font-bold px-2 py-0.5 rounded-full">RECAUDACIÓN</span>
+                                </div>
+                                <p class="text-[10px] text-gray-400 mb-2">META: 500 KILOS</p>
+                                <p class="text-xs text-gray-500 line-clamp-2 mb-3">Buscamos concentrado, alimentos y suplementos para animales rescatados.</p>
+                                <p class="text-[10px] text-gray-400 font-medium">AUTOR: REFUGIO FELIZ</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-brand-gray rounded-[1.5rem] p-4">
+                            <div class="h-24 bg-white rounded-xl mb-3 flex flex-col items-center justify-center text-gray-300 border border-dashed border-gray-200">
+                                <i class="fa-solid fa-image mb-1"></i>
+                                <span class="text-[10px]">SIN MULTIMEDIA</span>
+                            </div>
+                            <div class="flex justify-between items-start mb-1">
+                                <h4 class="font-bold text-brand-dark text-sm">Fondo de Esterilización</h4>
+                                <span class="text-[8px] bg-blue-100 text-brand-blue font-bold px-2 py-0.5 rounded-full">RECAUDACIÓN</span>
+                            </div>
+                            <p class="text-[10px] text-gray-400 mb-2">META: $1.000.000</p>
+                            <p class="text-xs text-gray-500 line-clamp-2 mb-3">Meta destinada a cubrir cirugías y cuidados postoperatorios.</p>
+                            <p class="text-[10px] text-gray-400 font-medium">AUTOR: GATITOS MIELES</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[2.5rem] p-4 shadow-sm border border-gray-100">
+                    <div class="flex items-center justify-between gap-3 px-2 mb-4">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-brand-blue shrink-0">
+                                <i class="fa-regular fa-newspaper"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-brand-dark text-sm leading-tight">seccion_noticias</h3>
+                                <p class="text-[10px] text-gray-400">desc_noticias</p>
+                            </div>
+                        </div>
+                        <button type="button" class="event-create-trigger hidden" data-requires-permission="news:create" data-open-content-modal="noticia">Crear</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="space-y-4" data-news-list></div>
+                        <div class="bg-brand-gray rounded-[1.5rem] p-4">
+                            <div class="flex justify-between items-start mb-1">
+                                <h4 class="font-bold text-brand-dark text-sm">Balance mensual de rescates</h4>
+                                <span class="text-[8px] bg-blue-100 text-brand-blue font-bold px-2 py-0.5 rounded-full">ACTUALIZACIÓN</span>
+                            </div>
+                            <p class="text-xs text-brand-dark font-medium mb-2 mt-2">Creció la atención de casos en Bogotá y Cundinamarca.</p>
+                            <p class="text-xs text-gray-500 line-clamp-3 mb-3">Durante el último mes se fortalecieron las rutas de rescate y acompañamiento veterinario para animales en condición de vulnerabilidad.</p>
+                            <p class="text-[10px] text-gray-400 font-medium">AUTOR: VIDA CANINA</p>
+                        </div>
+
+                        <div class="bg-brand-gray rounded-[1.5rem] p-4">
+                            <div class="flex justify-between items-start mb-1">
+                                <h4 class="font-bold text-brand-dark text-sm">Nuevo convenio de apoyo</h4>
+                                <span class="text-[8px] bg-blue-100 text-brand-blue font-bold px-2 py-0.5 rounded-full">COMUNICADO</span>
+                            </div>
+                            <p class="text-xs text-brand-dark font-medium mb-2 mt-2">Se sumó una red local para donar insumos de primera necesidad.</p>
+                            <p class="text-xs text-gray-500 line-clamp-3 mb-3">La alianza permitirá ampliar la cobertura para refugios aliados y optimizar la atención de emergencias.</p>
+                            <p class="text-[10px] text-gray-400 font-medium">AUTOR: ADMINISTRADOR</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[2.5rem] p-4 shadow-sm border border-gray-100">
+                    <div class="flex items-center justify-between gap-3 px-2 mb-4">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-brand-blue shrink-0">
+                                <i class="fa-regular fa-calendar"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-brand-dark text-sm leading-tight">seccion_eventos_titulo</h3>
+                                <p class="text-[10px] text-gray-400">desc_eventos_subtitulo</p>
+                            </div>
+                        </div>
+                        <button type="button" class="event-create-trigger hidden" data-requires-permission="events:create" data-open-content-modal="evento">Crear</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="space-y-4" data-events-list></div>
+                        <div class="bg-brand-gray rounded-[1.5rem] p-4">
+                            <div class="flex justify-between items-start mb-1">
+                                <h4 class="font-bold text-brand-dark text-sm">Jornada de Esterilización</h4>
+                                <span class="text-[8px] bg-blue-100 text-brand-blue font-bold px-2 py-0.5 rounded-full">ABIERTO</span>
+                            </div>
+                            <p class="text-[10px] text-gray-400 mb-2">2026-05-15 • SUBA, BOGOTÁ</p>
+                            <p class="text-xs text-gray-500 line-clamp-2 mb-4">Estaremos operando a costo social para familias de estratos 1 y 2.</p>
+                            <div class="flex justify-between items-center mt-2">
+                                <p class="text-[10px] text-gray-400 font-medium">AUTOR: REFUGIO</p>
+                                <button class="bg-brand-dark text-white text-xs px-4 py-1.5 rounded-full hover:bg-gray-800">Asistir</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-brand-gray rounded-[1.5rem] p-4">
+                            <div class="flex justify-between items-start mb-1">
+                                <h4 class="font-bold text-brand-dark text-sm">Feria de Adopción 'Huellas'</h4>
+                                <span class="text-[8px] bg-blue-100 text-brand-blue font-bold px-2 py-0.5 rounded-full">ESTRICTO</span>
+                            </div>
+                            <p class="text-[10px] text-gray-400 mb-2">2026-06-20 • PARQUE EL VIRREY</p>
+                            <p class="text-xs text-gray-500 line-clamp-2 mb-4">Más de 50 mascotas buscando hogar.</p>
+                            <div class="flex justify-between items-center mt-2">
+                                <p class="text-[10px] text-gray-400 font-medium">AUTOR: REFUGIO</p>
+                                <button class="bg-brand-dark text-white text-xs px-4 py-1.5 rounded-full hover:bg-gray-800">Asistir</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- MODALES DE CREACIÓN: Formularios específicos para cada tipo de contenido -->
+        <div class="fixed inset-0 z-[90] hidden flex items-center justify-center bg-slate-900/80 px-5 py-8" data-event-content-modal="campana" aria-hidden="true">
+            <form class="event-create-modal" data-event-content-form="campana">
+                <h2>PUBLICAR CAMPA&Ntilde;A</h2>
+                <input type="text" name="title" placeholder="T&iacute;tulo de la Campa&ntilde;a" required>
+                <div class="event-form-grid">
+                    <select name="category" required>
+                        <option value="Recaudaci&oacute;n">Recaudaci&oacute;n</option>
+                        <option value="Donaci&oacute;n">Donaci&oacute;n</option>
+                        <option value="Voluntariado">Voluntariado</option>
+                    </select>
+                    <input type="text" name="goal" placeholder="Meta / Objetivo" required>
+                </div>
+                <textarea name="description" rows="5" placeholder="Describe el objetivo de la campa&ntilde;a..." required></textarea>
+                <label class="event-file-field">
+                    <span>MULTIMEDIA DE LA CAMPA&Ntilde;A</span>
+                    <input type="file" name="media" accept="image/*,.pdf,video/*">
+                    <p style="font-size: 0.75rem; color: #9CA3AF; margin-top: 0.25rem;">Formatos: imágenes, PDF o videos</p>
+                </label>
+                <div class="event-modal-actions">
+                    <button type="button" class="event-cancel-btn" data-close-content-modal>Cancelar</button>
+                    <button type="submit" class="event-submit-btn">Publicar Campa&ntilde;a</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="fixed inset-0 z-[90] hidden flex items-center justify-center bg-slate-900/80 px-5 py-8" data-event-content-modal="noticia" aria-hidden="true">
+            <form class="event-create-modal" data-event-content-form="noticia">
+                <h2>PUBLICAR NOTICIA</h2>
+                <input type="text" name="title" placeholder="T&iacute;tulo de la Noticia" required>
+                <div class="event-form-grid">
+                    <select name="category" required>
+                        <option value="Actualizaci&oacute;n">Actualizaci&oacute;n</option>
+                        <option value="Comunicado">Comunicado</option>
+                        <option value="Alerta">Alerta</option>
+                    </select>
+                    <input type="text" name="summary" placeholder="Resumen breve" required>
+                </div>
+                <textarea name="description" rows="5" placeholder="Desarrollo informativo de la noticia..." required></textarea>
+                <label class="event-file-field">
+                    <span>MULTIMEDIA DE LA NOTICIA</span>
+                    <input type="file" name="media" accept="image/*,.pdf,video/*">
+                    <p style="font-size: 0.75rem; color: #9CA3AF; margin-top: 0.25rem;">Formatos: imágenes, PDF o videos</p>
+                </label>
+                <div class="event-modal-actions">
+                    <button type="button" class="event-cancel-btn" data-close-content-modal>Cancelar</button>
+                    <button type="submit" class="event-submit-btn">Publicar Noticia</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="fixed inset-0 z-[90] hidden flex items-center justify-center bg-slate-900/80 px-5 py-8" data-event-content-modal="evento" aria-hidden="true">
+            <form class="event-create-modal" data-event-content-form="evento">
+                <h2>PROGRAMAR EVENTO</h2>
+                <input type="text" name="title" placeholder="T&iacute;tulo del Evento" required>
+                <div class="event-form-grid">
+                    <input type="date" name="date" required>
+                    <input type="time" name="time" required>
+                </div>
+                <input type="text" name="location" placeholder="Ubicaci&oacute;n / Ciudad" required>
+                <textarea name="description" rows="4" placeholder="Detalles del evento..." required></textarea>
+                <label class="event-file-field">
+                    <span>MULTIMEDIA DEL EVENTO</span>
+                    <input type="file" name="media" accept="image/*,.pdf,video/*">
+                    <p style="font-size: 0.75rem; color: #9CA3AF; margin-top: 0.25rem;">Formatos: imágenes, PDF o videos</p>
+                </label>
+                <div class="event-modal-actions">
+                    <button type="button" class="event-cancel-btn" data-close-content-modal>Cancelar</button>
+                    <button type="submit" class="event-submit-btn">Crear Evento</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- MODAL DE DETALLE: Vista completa para profundizar en la información de un evento o noticia -->
+        <div class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-slate-900/90 px-5 py-8 backdrop-blur-sm" data-event-detail-modal aria-hidden="true">
+            <div class="bg-white w-full max-w-2xl max-h-[90vh] rounded-[2.5rem] overflow-hidden flex flex-col shadow-2xl">
+                <header class="p-6 border-b border-gray-100 flex justify-between items-center shrink-0">
+                    <div>
+                        <span class="text-[10px] font-bold text-brand-blue uppercase tracking-widest mb-1 block" data-detail-category>Categoría</span>
+                        <h2 class="text-xl font-bold text-brand-dark" data-detail-title>Título del Contenido</h2>
+                    </div>
+                    <button type="button" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-brand-dark transition" data-close-detail-modal>
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </header>
+                
+                <div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+                    <div class="rounded-2xl overflow-hidden mb-6 bg-gray-50 min-h-[200px]" data-detail-media-container>
+                        <!-- Aquí se insertará el video, imagen o pdf -->
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6" data-detail-meta-container>
+                        <!-- Información extra como Metas, Fechas, Ubicación -->
+                    </div>
+                    
+                    <div class="prose prose-sm max-w-none text-gray-600">
+                        <p class="whitespace-pre-wrap leading-relaxed" data-detail-description></p>
+                    </div>
+                </div>
+                
+                <footer class="p-6 border-t border-gray-100 bg-gray-50 flex justify-between items-center shrink-0">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-brand-blue text-white flex items-center justify-center text-xs font-bold" data-detail-author-initials>
+                            HP
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-400 font-medium uppercase tracking-tight">Publicado por</p>
+                            <p class="text-xs font-bold text-brand-dark" data-detail-author-name>Nombre del Autor</p>
+                        </div>
+                    </div>
+                    <div data-detail-actions>
+                        <!-- Botones de acción como "Asistir" o "Donar" -->
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>

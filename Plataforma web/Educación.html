@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huellas Pro | Educación</title>
+
+    <!-- Preconexiones a Google Fonts para optimizar el rendimiento de carga de fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Importa la fuente "Inter" de Google Fonts con múltiples pesos (300, 400, 500, 600, 700, 800) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Importa Font Awesome 6.4.0 - librería de iconos usada en el sitio -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            blue: '#00A3FF',
+                            dark: '#0B132B',
+                            light: '#FAFAFA',
+                            gray: '#F8FAFC',
+                            text: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body class="min-h-screen flex flex-col" data-page="educacion">
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="Inicio.html" class="flex items-center gap-2 cursor-pointer">
+                <div class="bg-brand-blue text-white p-1.5 rounded-md text-sm">
+                    <i class="fa-solid fa-paw"></i>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight text-brand-dark">
+                    HUELLAS<span class="text-brand-blue italic font-extrabold">PRO</span>
+                </h1>
+            </a>
+
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="Inicio.html" data-page-link="inicio" class="nav-btn text-gray-500 hover:text-brand-dark transition">Inicio</a>
+                <a href="Adopciones.html" data-page-link="adopciones" class="nav-btn text-gray-500 hover:text-brand-dark transition">Adopciones</a>
+                <a href="Eventos.html" data-page-link="eventos" class="nav-btn text-gray-500 hover:text-brand-dark transition">Eventos</a>
+                <a href="Comunidad.html" data-page-link="comunidad" class="nav-btn text-gray-500 hover:text-brand-dark transition">Comunidad</a>
+                <a href="Educación.html" data-page-link="educacion" class="nav-btn text-gray-500 hover:text-brand-dark transition">Educación</a>
+            </div>
+
+            <div class="flex items-center gap-4 text-sm font-medium">
+                <a href="LoginYUnete.html" data-page-link="login" class="nav-btn text-gray-400 hover:text-gray-800 transition">LOGIN</a>
+                <a href="LoginYUnete.html#unete" class="bg-brand-dark text-white px-5 py-2 rounded-full hover:bg-gray-800 transition shadow-sm">
+                    ÚNETE
+                </a>
+                <div data-lang-toggle class="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-md text-xs cursor-pointer border border-gray-100">
+                    <span class="lang-text">ES</span> <i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 w-full relative">
+        <!-- SECCIÓN DE EDUCACIÓN: Listado de guías, artículos y material de apoyo -->
+        <section class="max-w-5xl mx-auto px-6 py-12">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+                <h2 class="text-3xl font-bold text-brand-dark">Educación y Guías</h2>
+                <button type="button" class="bg-brand-blue text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-blue-600 transition shadow-sm hidden" data-requires-permission="education:create" data-open-content-modal="educacion">
+                    <i class="fa-solid fa-plus mr-2"></i> Crear Contenido
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" data-education-list>
+                <div class="bg-white rounded-3xl shadow-sm border border-gray-100 flex overflow-hidden hover:shadow-md transition">
+                    <div class="w-2/5 md:w-1/3">
+                        <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=400&q=80" alt="Guía" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-3/5 md:w-2/3 p-6 flex flex-col justify-center">
+                        <p class="text-[9px] font-bold text-brand-blue tracking-widest uppercase mb-2">GUÍA ADOPTANTE</p>
+                        <h3 class="text-lg font-bold text-brand-dark mb-2 leading-tight">Cómo preparar tu hogar para un nuevo perro</h3>
+                        <p class="text-xs text-gray-500 mb-4 line-clamp-2">Todo lo que necesitas saber antes de la llegada de tu mejor amigo.</p>
+                        <a href="#" class="text-[10px] font-bold text-brand-dark hover:text-brand-blue flex items-center gap-1">
+                            VER MATERIAL <i class="fa-solid fa-chevron-right text-[8px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl shadow-sm border border-gray-100 flex overflow-hidden hover:shadow-md transition">
+                    <div class="w-2/5 md:w-1/3">
+                        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=400&q=80" alt="Salud" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-3/5 md:w-2/3 p-6 flex flex-col justify-center">
+                        <p class="text-[9px] font-bold text-brand-blue tracking-widest uppercase mb-2">SALUD</p>
+                        <h3 class="text-lg font-bold text-brand-dark mb-2 leading-tight">La importancia de la esterilización</h3>
+                        <p class="text-xs text-gray-500 mb-4 line-clamp-2">Mitos y realidades sobre este procedimiento quirúrgico vital.</p>
+                        <a href="#" class="text-[10px] font-bold text-brand-dark hover:text-brand-blue flex items-center gap-1">
+                            VER MATERIAL <i class="fa-solid fa-chevron-right text-[8px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- MODAL DE CREACIÓN: Formulario para publicar nuevo contenido educativo (Solo Refugios) -->
+        <div class="fixed inset-0 z-[90] hidden flex items-center justify-center bg-slate-900/80 px-5 py-8" data-event-content-modal="educacion" aria-hidden="true">
+            <form class="event-create-modal" data-event-content-form="educacion">
+                <h2>PUBLICAR CONTENIDO EDUCATIVO</h2>
+                <input type="text" name="title" placeholder="T&iacute;tulo del Contenido" required>
+                <div class="event-form-grid">
+                    <input type="text" name="category" placeholder="Categoría (ej. GUÍA ADOPTANTE)" required>
+                </div>
+                <textarea name="description" rows="5" placeholder="Describe el contenido educativo..." required></textarea>
+                <label class="event-file-field">
+                    <span>MULTIMEDIA (IMAGEN/VIDEO/PDF)</span>
+                    <input type="file" name="media" accept="image/*,.pdf,video/*">
+                    <p style="font-size: 0.75rem; color: #9CA3AF; margin-top: 0.25rem;">Formatos: imágenes, PDF o videos</p>
+                </label>
+                <label class="event-file-field mt-3">
+                    <span>ARCHIVO MULTIMEDIA ADICIONAL (OPCIONAL)</span>
+                    <input type="file" name="media2" accept="image/*,.pdf,video/*">
+                    <p style="font-size: 0.75rem; color: #9CA3AF; margin-top: 0.25rem;">Formatos: imágenes, PDF o videos</p>
+                </label>
+                <div class="event-modal-actions mt-4">
+                    <button type="button" class="event-cancel-btn" data-close-content-modal>Cancelar</button>
+                    <button type="submit" class="bg-brand-blue text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-blue-600 transition shadow-sm" data-submit-content-btn>Publicar Contenido</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- MODAL DE DETALLE: Vista expandida del contenido seleccionado (Imagen, Video o PDF) -->
+        <div class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-slate-900/90 px-5 py-8 backdrop-blur-sm" data-event-detail-modal aria-hidden="true">
+            <div class="bg-white w-full max-w-2xl max-h-[90vh] rounded-[2.5rem] overflow-hidden flex flex-col shadow-2xl">
+                <header class="p-6 border-b border-gray-100 flex justify-between items-center shrink-0">
+                    <div>
+                        <span class="text-[10px] font-bold text-brand-blue uppercase tracking-widest mb-1 block" data-detail-category>Categoría</span>
+                        <h2 class="text-xl font-bold text-brand-dark" data-detail-title>Título del Contenido</h2>
+                    </div>
+                    <button type="button" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-brand-dark transition" data-close-detail-modal>
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </header>
+                
+                <div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+                    <div class="rounded-2xl overflow-hidden mb-6 bg-gray-50 min-h-[200px]" data-detail-media-container>
+                        <!-- Aquí se insertará el video, imagen o pdf -->
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6" data-detail-meta-container>
+                        <!-- Información extra -->
+                    </div>
+                    
+                    <div class="prose prose-sm max-w-none text-gray-600">
+                        <p class="whitespace-pre-wrap leading-relaxed" data-detail-description></p>
+                    </div>
+                </div>
+                
+                <footer class="p-6 border-t border-gray-100 bg-gray-50 flex justify-between items-center shrink-0">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-brand-blue text-white flex items-center justify-center text-xs font-bold" data-detail-author-initials>
+                            HP
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-400 font-medium uppercase tracking-tight">Publicado por</p>
+                            <p class="text-xs font-bold text-brand-dark" data-detail-author-name>Nombre del Autor</p>
+                        </div>
+                    </div>
+                    <div data-detail-actions>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huellas Pro | Adopciones</title>
+
+    <!-- Preconexiones a Google Fonts para optimizar el rendimiento de carga de fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Importa la fuente "Inter" de Google Fonts con múltiples pesos (300, 400, 500, 600, 700, 800) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Importa Font Awesome 6.4.0 - librería de iconos SVG para usar elementos como <i class="fa-solid fa-paw"></i> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <!-- Esta es la vinculación del archivo styles.css que contiene todos los estilos personalizados de la plataforma -->
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            blue: '#00A3FF',
+                            dark: '#0B132B',
+                            light: '#FAFAFA',
+                            gray: '#F8FAFC',
+                            text: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<body class="min-h-screen flex flex-col" data-page="adopciones">
+    <!-- NAVEGACIÓN: Menú superior con logo, enlaces de página y acceso de usuario -->
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="Inicio.html" class="flex items-center gap-2 cursor-pointer">
+                <div class="bg-brand-blue text-white p-1.5 rounded-md text-sm">
+                    <i class="fa-solid fa-paw"></i>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight text-brand-dark">
+                    HUELLAS<span class="text-brand-blue italic font-extrabold">PRO</span>
+                </h1>
+            </a>
+
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="Inicio.html" data-page-link="inicio" class="nav-btn text-gray-500 hover:text-brand-dark transition">Inicio</a>
+                <a href="Adopciones.html" data-page-link="adopciones" class="nav-btn text-gray-500 hover:text-brand-dark transition">Adopciones</a>
+                <a href="Eventos.html" data-page-link="eventos" class="nav-btn text-gray-500 hover:text-brand-dark transition">Eventos</a>
+                <a href="Comunidad.html" data-page-link="comunidad" class="nav-btn text-gray-500 hover:text-brand-dark transition">Comunidad</a>
+                <a href="Educación.html" data-page-link="educacion" class="nav-btn text-gray-500 hover:text-brand-dark transition">Educación</a>
+            </div>
+
+            <div class="flex items-center gap-4 text-sm font-medium">
+                <a href="LoginYUnete.html" data-page-link="login" class="nav-btn text-gray-400 hover:text-gray-800 transition">LOGIN</a>
+                <a href="LoginYUnete.html#unete" class="bg-brand-dark text-white px-5 py-2 rounded-full hover:bg-gray-800 transition shadow-sm">
+                    ÚNETE
+                </a>
+                <div data-lang-toggle class="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-md text-xs cursor-pointer border border-gray-100">
+                    <span class="lang-text">ES</span> <i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 w-full relative">
+        <!-- SECCIÓN DE ADOPCIONES: Contenedor principal para filtros y listado de mascotas -->
+        <section class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-8" data-adoption-root>
+            <!-- BARRA LATERAL DE FILTROS: Permite al usuario buscar por especie, ubicación, etc. -->
+            <aside class="w-full md:w-64 flex-shrink-0">
+                <div class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100 sticky top-24">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-bold text-brand-dark flex items-center gap-2">
+                            <i class="fa-solid fa-sliders text-brand-blue text-sm"></i> FILTROS
+                        </h3>
+                        <button type="button" class="text-[10px] text-brand-blue font-bold uppercase hover:underline" data-filter-clear>Limpiar</button>
+                    </div>
+
+                    <div class="space-y-5">
+                        <div>
+                            <label class="block text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-2 ml-1">Especie</label>
+                            <div class="relative">
+                                <select class="w-full bg-brand-gray border border-gray-100 rounded-xl px-4 py-2.5 text-sm appearance-none focus:outline-none text-brand-dark font-medium" data-filter="species">
+                                    <option value="">Todos</option>
+                                    <option value="perros">Perros</option>
+                                    <option value="gatos">Gatos</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-2 ml-1">Ubicación</label>
+                            <div class="relative">
+                                <select class="w-full bg-brand-gray border border-gray-100 rounded-xl px-4 py-2.5 text-sm appearance-none focus:outline-none text-brand-dark font-medium" data-filter="location">
+                                    <option value="">Todo Colombia</option>
+                                    <option value="bogota">Bogotá</option>
+                                    <option value="medellin">Medellín</option>
+                                    <option value="cali">Cali</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-2 ml-1">Estado de Salud</label>
+                            <div class="relative">
+                                <select class="w-full bg-brand-gray border border-gray-100 rounded-xl px-4 py-2.5 text-sm appearance-none focus:outline-none text-brand-dark font-medium" data-filter="health">
+                                    <option value="">Todos</option>
+                                    <option value="vacunado">Vacunado</option>
+                                    <option value="esterilizado">Esterilizado</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-2 ml-1">Tamaño</label>
+                            <div class="relative">
+                                <select class="w-full bg-brand-gray border border-gray-100 rounded-xl px-4 py-2.5 text-sm appearance-none focus:outline-none text-brand-dark font-medium" data-filter="size">
+                                    <option value="">Todos</option>
+                                    <option value="pequeno">Pequeño</option>
+                                    <option value="mediano">Mediano</option>
+                                    <option value="grande">Grande</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                            </div>
+                        </div>
+
+                        <button type="button" class="w-full bg-brand-dark text-white rounded-xl py-3 font-medium hover:bg-gray-800 transition shadow-md mt-4 text-sm" data-filter-submit>
+                            Filtrar Ahora
+                        </button>
+                        <div class="pt-5 mt-5 border-t border-gray-100 hidden" data-requires-permission="animals:create">
+                            <button type="button" class="publish-pet-trigger" data-open-pet-modal>
+                                <i class="fa-solid fa-circle-plus"></i>
+                                Publicar Mascota
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- LISTADO DE MASCOTAS: Rejilla donde se renderizan dinámicamente las fichas de los animales -->
+            <div class="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-animal-list>
+                <div class="bg-white rounded-[2rem] p-2 pb-6 shadow-sm border border-gray-100 hover:shadow-lg transition group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-blue/30" tabindex="0" role="button" aria-label="Ver detalle de Max" data-animal-card data-animal-id="animal_max" data-species="perros" data-location="bogota" data-health="sano" data-size="mediano" data-gender="Macho" data-vaccinated="Vacunado" data-sterilized="Esterilizado" data-story="Un compañero leal que busca una familia activa. Fue rescatado y hoy está listo para compartir paseos, juegos y una nueva vida llena de cuidado.">
+                    <div class="relative h-48 rounded-[1.5rem] overflow-hidden mb-4">
+                        <img src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&w=400&q=80" alt="Max" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold text-brand-dark shadow-sm">Bogotá</div>
+                    </div>
+                    <div class="px-4">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="text-xl font-bold text-brand-dark">Max</h4>
+                            <i class="fa-solid fa-shield-dog text-brand-blue text-sm"></i>
+                        </div>
+                        <p class="text-[10px] font-bold text-brand-blue tracking-wider uppercase mb-2">CRIOLLO • 2 AÑOS</p>
+                        <p class="text-sm text-gray-500 line-clamp-2">Un compañero leal que busca una familia activa. Fue rescata...</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[2rem] p-2 pb-6 shadow-sm border border-gray-100 hover:shadow-lg transition group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-blue/30" tabindex="0" role="button" aria-label="Ver detalle de Luna" data-animal-card data-animal-id="animal_luna" data-species="gatos" data-location="medellin" data-health="sano" data-size="pequeno" data-gender="Hembra" data-vaccinated="Vacunada" data-sterilized="Esterilizada" data-story="Luna es muy tranquila y amorosa. Ideal para una familia calmada que quiera una compañía tierna, curiosa y de hábitos serenos.">
+                    <div class="relative h-48 rounded-[1.5rem] overflow-hidden mb-4">
+                        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=400&q=80" alt="Luna" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold text-brand-dark shadow-sm">Medellín</div>
+                    </div>
+                    <div class="px-4">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="text-xl font-bold text-brand-dark">Luna</h4>
+                            <i class="fa-solid fa-shield-cat text-brand-blue text-sm"></i>
+                        </div>
+                        <p class="text-[10px] font-bold text-brand-blue tracking-wider uppercase mb-2">ANGORA • 1 AÑO</p>
+                        <p class="text-sm text-gray-500 line-clamp-2">Luna es muy tranquila y amorosa. Ideal para...</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[2rem] p-2 pb-6 shadow-sm border border-gray-100 hover:shadow-lg transition group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-blue/30" tabindex="0" role="button" aria-label="Ver detalle de Simba" data-animal-card data-animal-id="animal_simba" data-species="perros" data-location="cali" data-health="tratamiento" data-size="grande" data-gender="Macho" data-vaccinated="Vacunado" data-sterilized="Esterilizado" data-story="Rescatado en condiciones difíciles, hoy es el perro más noble del refugio. Simba necesita una familia paciente que lo acompañe mientras termina su recuperación.">
+                    <div class="relative h-48 rounded-[1.5rem] overflow-hidden mb-4">
+                        <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=400&q=80" alt="Simba" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold text-brand-dark shadow-sm">Cali</div>
+                    </div>
+                    <div class="px-4">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="text-xl font-bold text-brand-dark">Simba</h4>
+                            <i class="fa-solid fa-shield-dog text-brand-blue text-sm"></i>
+                        </div>
+                        <p class="text-[10px] font-bold text-brand-blue tracking-wider uppercase mb-2">GOLDEN • 3 AÑOS</p>
+                        <p class="text-sm text-gray-500 line-clamp-2">Rescatado en condiciones difíciles, hoy es el perro más...</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[2rem] p-2 pb-6 shadow-sm border border-gray-100 hover:shadow-lg transition group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-blue/30" tabindex="0" role="button" aria-label="Ver detalle de Boby" data-animal-card data-animal-id="animal_boby" data-species="perros" data-location="bogota" data-health="sano" data-size="pequeno" data-gender="Macho" data-vaccinated="Vacunado" data-sterilized="Esterilizado" data-story="Boby es pequeño, sociable y muy expresivo. Disfruta los paseos cortos y se adapta bien a hogares con rutinas tranquilas.">
+                    <div class="relative h-48 rounded-[1.5rem] overflow-hidden mb-4">
+                        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=400&q=80" alt="Boby" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold text-brand-dark shadow-sm">Bogotá</div>
+                    </div>
+                    <div class="px-4">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="text-xl font-bold text-brand-dark">Boby</h4>
+                            <i class="fa-solid fa-shield-dog text-brand-blue text-sm"></i>
+                        </div>
+                        <p class="text-[10px] font-bold text-brand-blue tracking-wider uppercase mb-2">CRIOLLO • RECIÉN LLEGADO</p>
+                        <p class="text-sm text-gray-500 line-clamp-2">En la taxonomía o clasificación científica de los seres vivos...</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[2rem] p-2 pb-6 shadow-sm border border-gray-100 hover:shadow-lg transition group cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-blue/30" tabindex="0" role="button" aria-label="Ver detalle de 123" data-animal-card data-animal-id="animal_123" data-species="perros" data-location="bogota" data-health="tratamiento" data-size="mediano" data-gender="Macho" data-vaccinated="Vacunado" data-sterilized="Pendiente" data-story="Este perrito está recién llegado y se encuentra en valoración. Busca una familia responsable que pueda darle seguimiento y mucho cariño.">
+                    <div class="relative h-48 bg-gray-100 rounded-[1.5rem] overflow-hidden mb-4 flex items-center justify-center">
+                        <i class="fa-solid fa-image text-gray-300 text-4xl"></i>
+                        <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold text-brand-dark shadow-sm">Bogotá</div>
+                    </div>
+                    <div class="px-4">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="text-xl font-bold text-brand-dark">123</h4>
+                            <i class="fa-solid fa-shield-dog text-brand-blue text-sm"></i>
+                        </div>
+                        <p class="text-[10px] font-bold text-brand-blue tracking-wider uppercase mb-2">DALGO • RECIÉN LLEGADO</p>
+                        <p class="text-sm text-gray-500 line-clamp-2">sdegsdg65</p>
+                    </div>
+                </div>
+                <div class="hidden md:col-span-2 lg:col-span-3 bg-white rounded-[2rem] border border-gray-100 p-10 text-center" data-empty-results>
+                    <div class="bg-brand-gray text-gray-300 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-brand-dark mb-1">No hay animales con esos filtros</h4>
+                    <p class="text-sm text-gray-400">Prueba con otra especie, ubicación, estado o tamaño.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- MODAL DE DETALLE: Ventana emergente que muestra la información completa de una mascota -->
+        <div class="hidden fixed inset-0 z-[100] bg-[#182235]/95 px-4 py-8 overflow-y-auto" data-animal-modal aria-hidden="true" role="dialog" aria-modal="true">
+            <div class="min-h-full flex items-center justify-center">
+                <article class="animal-detail-modal relative w-full max-w-6xl bg-white overflow-hidden shadow-2xl">
+                    <button type="button" class="absolute top-5 right-5 z-20 w-11 h-11 rounded-full bg-white/90 text-brand-dark shadow-md hover:bg-brand-blue hover:text-white transition flex items-center justify-center" data-modal-close aria-label="Cerrar detalle">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                    <div class="animal-detail-media relative bg-brand-gray">
+                        <img alt="" class="w-full h-full object-cover" data-modal-image>
+                        <div class="hidden w-full h-full items-center justify-center bg-gray-100 text-gray-300 text-6xl" data-modal-placeholder>
+                            <i class="fa-solid fa-image"></i>
+                        </div>
+                        <span class="absolute top-8 left-8 bg-brand-blue text-white rounded-full px-7 py-2 text-[11px] font-extrabold uppercase tracking-[0.18em]">
+                            En adopción
+                        </span>
+                    </div>
+
+                    <div class="animal-detail-content">
+                        <h2 class="text-5xl md:text-6xl font-extrabold text-[#263248] leading-none mb-4" data-modal-name></h2>
+                        <p class="text-brand-blue text-xl font-extrabold italic uppercase tracking-[0.22em] mb-9" data-modal-meta></p>
+
+                        <div class="flex flex-wrap gap-3 mb-8">
+                            <span class="animal-detail-chip" data-modal-gender></span>
+                            <span class="animal-detail-chip" data-modal-size></span>
+                            <span class="animal-detail-chip animal-detail-chip-blue" data-modal-health></span>
+                            <span class="animal-detail-chip animal-detail-chip-blue" data-modal-vaccinated></span>
+                            <span class="animal-detail-chip animal-detail-chip-blue" data-modal-sterilized></span>
+                        </div>
+
+                        <div class="bg-brand-gray rounded-[2rem] px-8 py-7 mb-10">
+                            <p class="text-[11px] text-gray-400 font-extrabold uppercase tracking-[0.18em] mb-3">Historia y personalidad</p>
+                            <p class="text-sm md:text-base text-gray-500 leading-relaxed" data-modal-story></p>
+                        </div>
+
+                        <div class="animal-detail-actions">
+                            <button type="button" class="animal-detail-icon-btn" aria-label="Enviar mensaje" data-modal-message>
+                                <i class="fa-solid fa-comment-dots"></i>
+                            </button>
+                            <button type="button" class="animal-adopt-btn bg-brand-blue text-white rounded-[1.6rem] px-8 md:px-11 py-5 font-extrabold uppercase tracking-[0.16em] hover:bg-blue-600 transition shadow-lg shadow-brand-blue/25" data-modal-adopt>
+                                Solicitar adopción
+                            </button>
+                            <button type="button" class="animal-detail-icon-btn" aria-label="Guardar favorito" data-modal-favorite>
+                                <i class="fa-solid fa-star"></i>
+                            </button>
+                        </div>
+
+                        <button type="button" class="block mx-auto mt-9 text-[11px] text-gray-400 font-extrabold uppercase tracking-[0.5em] hover:text-brand-blue transition" data-modal-close>
+                            Cerrar detalle
+                        </button>
+                    </div>
+                </article>
+            </div>
+        </div>
+        
+        <!-- MODAL DE PUBLICACIÓN/EDICIÓN: Formulario para que los refugios gestionen sus mascotas -->
+        <div class="hidden fixed inset-0 z-[110] bg-[#182235]/95 px-4 py-8 overflow-y-auto" data-pet-editor-modal aria-hidden="true" role="dialog" aria-modal="true">
+            <div class="min-h-full flex items-center justify-center">
+                <article class="pet-editor-modal">
+                    <h2 data-pet-modal-title>Publicar Nueva Mascota</h2>
+                    <form data-pet-editor-form>
+                        <input type="hidden" name="animalId">
+
+                        <label class="pet-file-field">
+                            <span>Foto de la mascota (subir desde PC)</span>
+                            <input type="file" name="photo" accept="image/*">
+                        </label>
+
+                        <div class="pet-editor-grid">
+                            <input type="text" name="name" placeholder="Nombre" required>
+                            <select name="species">
+                                <option value="perros">Perro</option>
+                                <option value="gatos">Gato</option>
+                            </select>
+                            <input type="text" name="breed" placeholder="Raza" required>
+                            <select name="city">
+                                <option>Bogotá</option>
+                                <option>Medellín</option>
+                                <option>Cali</option>
+                                <option>Cartagena</option>
+                                <option>Barranquilla</option>
+                            </select>
+                            <select name="gender">
+                                <option>Macho</option>
+                                <option>Hembra</option>
+                                <option>Por definir</option>
+                            </select>
+                            <select name="size">
+                                <option value="pequeno">Tamaño Pequeño</option>
+                                <option value="mediano" selected>Tamaño Mediano</option>
+                                <option value="grande">Tamaño Grande</option>
+                            </select>
+                        </div>
+
+                        <div class="pet-check-row">
+                            <label><input type="checkbox" name="vaccinated"> Vacunado</label>
+                            <label><input type="checkbox" name="sterilized"> Esterilizado</label>
+                        </div>
+
+                        <textarea name="story" rows="5" placeholder="Escribe aquí su historia y requisitos de adopción..." required></textarea>
+
+                        <div class="pet-editor-actions">
+                            <button type="button" class="pet-cancel-btn" data-close-pet-modal>Cancelar</button>
+                            <button type="submit" class="pet-save-btn">Guardar Mascota</button>
+                        </div>
+                    </form>
+                </article>
+            </div>
+        </div>
+
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>

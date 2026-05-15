@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huellas Pro | Perfil</title>
+
+    <!-- Preconexiones a Google Fonts para optimizar el rendimiento de carga de fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Importa la fuente "Inter" de Google Fonts con múltiples pesos (300, 400, 500, 600, 700, 800) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Importa Font Awesome 6.4.0 - librería de iconos usada en el sitio -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            blue: '#00A3FF',
+                            dark: '#0B132B',
+                            light: '#FAFAFA',
+                            gray: '#F8FAFC',
+                            text: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+</head>
+<body class="min-h-screen flex flex-col" data-page="perfil">
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="Inicio.html" class="flex items-center gap-2 cursor-pointer">
+                <div class="bg-brand-blue text-white p-1.5 rounded-md text-sm">
+                    <i class="fa-solid fa-paw"></i>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight text-brand-dark">
+                    HUELLAS<span class="text-brand-blue italic font-extrabold">PRO</span>
+                </h1>
+            </a>
+
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="Inicio.html" data-page-link="inicio" class="nav-btn text-gray-500 hover:text-brand-dark transition">Inicio</a>
+                <a href="Adopciones.html" data-page-link="adopciones" class="nav-btn text-gray-500 hover:text-brand-dark transition">Adopciones</a>
+                <a href="Eventos.html" data-page-link="eventos" class="nav-btn text-gray-500 hover:text-brand-dark transition">Eventos</a>
+                <a href="Comunidad.html" data-page-link="comunidad" class="nav-btn text-gray-500 hover:text-brand-dark transition">Comunidad</a>
+                <a href="Educación.html" data-page-link="educacion" class="nav-btn text-gray-500 hover:text-brand-dark transition">Educación</a>
+            </div>
+
+            <div class="flex items-center gap-4 text-sm font-medium">
+                <a href="LoginYUnete.html#login" data-page-link="login" class="nav-btn text-gray-400 hover:text-gray-800 transition">LOGIN</a>
+                <a href="LoginYUnete.html#unete" class="bg-brand-dark text-white px-5 py-2 rounded-full hover:bg-gray-800 transition shadow-sm">
+                    ÚNETE
+                </a>
+                <div data-lang-toggle class="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-md text-xs cursor-pointer border border-gray-100">
+                    <span class="lang-text">ES</span> <i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="profile-page flex-1" data-profile-root>
+        <!-- DISEÑO DEL PERFIL: Estructura dividida en barra lateral de usuario y contenido dinámico -->
+        <section class="profile-layout">
+            <!-- BARRA LATERAL: Información básica del usuario, foto de perfil y menú de navegación -->
+            <aside class="profile-sidebar">
+                <label class="relative cursor-pointer group mb-4 block mx-auto w-[8rem] h-[8rem]" title="Actualizar foto de perfil">
+                    <div class="profile-avatar-large absolute inset-0 m-0 w-full h-full overflow-hidden" data-profile-initials>MI</div>
+                    <img src="" alt="Avatar" class="hidden absolute inset-0 w-full h-full object-cover z-10 border-[4px] border-[#E4F4FF] shadow-[0_1.2rem_2rem_rgba(15,23,42,0.12)] rounded-[1.4rem]" data-profile-image>
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20 rounded-[1.4rem]">
+                        <i class="fa-solid fa-camera text-white text-2xl"></i>
+                    </div>
+                    <input type="file" accept="image/*" class="hidden" data-profile-photo-input>
+                </label>
+                <h2 data-profile-name>miguel</h2>
+                <span class="profile-role-pill" data-profile-role>REFUGIO ALIADO</span>
+
+                <nav class="profile-menu" aria-label="Secciones del perfil">
+                    <button type="button" class="profile-menu-item" data-profile-tab="info">Mi Información</button>
+                    <button type="button" class="profile-menu-item" data-profile-tab="solicitudes">Mis Solicitudes</button>
+                    <button type="button" class="profile-menu-item" data-profile-tab="favoritos">Favoritos</button>
+                    <button type="button" class="profile-menu-item" data-profile-tab="mensajes">Mensajes</button>
+                    <button type="button" class="profile-menu-item hidden" data-profile-tab="refugio" data-requires-permission="shelter_panel:access">Panel Refugio</button>
+                </nav>
+            </aside>
+            
+            <!-- ÁREA DE CONTENIDO: Vistas dinámicas que cambian según la pestaña seleccionada en el menú -->
+            <section class="profile-content">
+                <div data-profile-view="info">
+                    <article class="profile-settings-card">
+                        <h1>Ajustes de Cuenta</h1>
+                        <form data-profile-info-form>
+                            <div class="profile-form-grid">
+                                <label>
+                                    <span>Nombre Público</span>
+                                    <input type="text" name="publicName" data-profile-name>
+                                </label>
+                                <label>
+                                    <span>Correo Electrónico</span>
+                                    <input type="email" name="email" data-profile-email>
+                                </label>
+                            </div>
+                            <button type="submit" class="profile-primary-btn">Actualizar Perfil</button>
+                        </form>
+                    </article>
+                </div>
+
+                <div class="hidden" data-profile-view="solicitudes">
+                    <h1 class="profile-section-title">Estado de Solicitudes</h1>
+                    <div class="profile-list-space" data-requests-list></div>
+                </div>
+
+                <div class="hidden" data-profile-view="favoritos">
+                    <h1 class="profile-section-title">Tus Guardados</h1>
+                    <div class="profile-favorites-grid" data-favorites-list></div>
+                    <div class="profile-pagination" data-favorites-pagination></div>
+                </div>
+
+                <div class="hidden" data-profile-view="mensajes">
+                    <div class="profile-messages-layout">
+                        <aside class="profile-conversation-list" data-conversation-list></aside>
+                        <section class="profile-message-panel" data-message-panel>
+                            <h2>Selecciona una conversación</h2>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="hidden" data-profile-view="refugio">
+                    <h1 class="profile-section-title">Panel de Gestión del Refugio</h1>
+                    <div class="profile-admin-grid">
+                        <article class="profile-admin-card">
+                            <h2>Crear ficha de adopción</h2>
+                            <form class="profile-admin-form" data-shelter-animal-form>
+                                <input name="animalId" type="hidden">
+                                <input name="name" type="text" placeholder="Nombre del animal" required>
+                                <div class="profile-two-cols">
+                                    <select name="species">
+                                        <option value="perros">Perro</option>
+                                        <option value="gatos">Gato</option>
+                                    </select>
+                                    <select name="size">
+                                        <option value="pequeno">Pequeño</option>
+                                        <option value="mediano">Mediano</option>
+                                        <option value="grande">Grande</option>
+                                    </select>
+                                </div>
+                                <div class="profile-two-cols">
+                                    <input name="breed" type="text" placeholder="Raza">
+                                    <input name="age" type="text" placeholder="Edad">
+                                </div>
+                                <div class="profile-two-cols">
+                                    <input name="city" type="text" placeholder="Ciudad">
+                                    <select name="health">
+                                        <option value="sano">Sano</option>
+                                        <option value="tratamiento">En tratamiento</option>
+                                    </select>
+                                </div>
+                                <select name="gender">
+                                    <option>Macho</option>
+                                    <option>Hembra</option>
+                                    <option>Por definir</option>
+                                </select>
+                                <input name="image" type="url" placeholder="URL de imagen">
+                                <textarea name="description" rows="4" placeholder="Historia y personalidad"></textarea>
+                                <button type="submit" class="profile-primary-btn">Guardar ficha</button>
+                            </form>
+                        </article>
+
+                        <article class="profile-admin-card">
+                            <h2>Fichas publicadas</h2>
+                            <div class="profile-admin-list" data-shelter-animals></div>
+                        </article>
+
+                        <article class="profile-admin-card">
+                            <h2>Crear campaña, evento o noticia</h2>
+                            <form class="profile-admin-form" data-shelter-content-form>
+                                <select name="type">
+                                    <option value="campana">Campaña</option>
+                                    <option value="evento">Evento</option>
+                                    <option value="noticia">Noticia destacada</option>
+                                </select>
+                                <input name="title" type="text" placeholder="Título" required>
+                                <textarea name="description" rows="4" placeholder="Descripción"></textarea>
+                                <button type="submit" class="profile-primary-btn">Publicar contenido</button>
+                            </form>
+                        </article>
+
+                        <article class="profile-admin-card">
+                            <h2>Contenido publicado</h2>
+                            <div class="profile-admin-list" data-shelter-content></div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <!-- MODAL DE ANIMAL GUARDADO: Muestra la información detallada de una mascota favorita -->
+    <div class="hidden fixed inset-0 z-[100] bg-[#182235]/95 px-4 py-8 overflow-y-auto" data-profile-animal-modal aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="min-h-full flex items-center justify-center">
+            <article class="animal-detail-modal relative w-full max-w-6xl bg-white overflow-hidden shadow-2xl">
+                <button type="button" class="absolute top-5 right-5 z-20 w-11 h-11 rounded-full bg-white/90 text-brand-dark shadow-md hover:bg-brand-blue hover:text-white transition flex items-center justify-center" data-profile-animal-close aria-label="Cerrar detalle">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <div class="animal-detail-media relative bg-brand-gray">
+                    <img alt="" class="w-full h-full object-cover" data-profile-animal-image>
+                    <div class="hidden w-full h-full items-center justify-center bg-gray-100 text-gray-300 text-6xl" data-profile-animal-placeholder>
+                        <i class="fa-solid fa-image"></i>
+                    </div>
+                    <span class="absolute top-8 left-8 bg-brand-blue text-white rounded-full px-7 py-2 text-[11px] font-extrabold uppercase tracking-[0.18em]">
+                        Guardado
+                    </span>
+                </div>
+
+                <div class="animal-detail-content">
+                    <h2 class="text-5xl md:text-6xl font-extrabold text-[#263248] leading-none mb-4" data-profile-animal-name></h2>
+                    <p class="text-brand-blue text-xl font-extrabold italic uppercase tracking-[0.22em] mb-9" data-profile-animal-meta></p>
+
+                    <div class="flex flex-wrap gap-3 mb-8">
+                        <span class="animal-detail-chip" data-profile-animal-gender></span>
+                        <span class="animal-detail-chip" data-profile-animal-size></span>
+                        <span class="animal-detail-chip animal-detail-chip-blue" data-profile-animal-health></span>
+                        <span class="animal-detail-chip animal-detail-chip-blue" data-profile-animal-vaccinated></span>
+                        <span class="animal-detail-chip animal-detail-chip-blue" data-profile-animal-sterilized></span>
+                    </div>
+
+                    <div class="bg-brand-gray rounded-[2rem] px-8 py-7 mb-10">
+                        <p class="text-[11px] text-gray-400 font-extrabold uppercase tracking-[0.18em] mb-3">Historia y personalidad</p>
+                        <p class="text-sm md:text-base text-gray-500 leading-relaxed" data-profile-animal-story></p>
+                    </div>
+
+                    <button type="button" class="block mx-auto mt-9 text-[11px] text-gray-400 font-extrabold uppercase tracking-[0.5em] hover:text-brand-blue transition" data-profile-animal-close>
+                        Cerrar detalle
+                    </button>
+                </div>
+            </article>
+        </div>
+    </div>
+    
+    <!-- MODAL DE SATISFACCIÓN: Formulario post-adopción para recolectar feedback de los usuarios -->
+    <div class="hidden fixed inset-0 z-[110] bg-[#182235]/95 px-4 py-8 overflow-y-auto" data-satisfaction-modal aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="min-h-full flex items-center justify-center">
+            <div class="satisfaction-modal-card relative w-full max-w-xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden">
+                <button type="button" class="absolute top-5 right-5 z-20 w-10 h-10 rounded-full bg-gray-100 text-brand-dark hover:bg-brand-blue hover:text-white transition flex items-center justify-center" data-close-satisfaction aria-label="Cerrar formulario">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <div class="p-8 pb-2">
+                    <h2 class="text-2xl font-extrabold text-brand-dark uppercase tracking-tight mb-1">Formulario de Satisfacción</h2>
+                    <p class="text-sm text-gray-500 mb-6">Cuéntanos cómo fue tu experiencia con la adopción y ayuda al refugio a mejorar.</p>
+
+                    <form data-satisfaction-form>
+                        <div class="grid grid-cols-2 gap-4 mb-5">
+                            <div>
+                                <label class="satisfaction-label">MASCOTA</label>
+                                <input type="text" class="satisfaction-input" data-satisfaction-mascota readonly>
+                            </div>
+                            <div>
+                                <label class="satisfaction-label">REFUGIO</label>
+                                <input type="text" class="satisfaction-input" data-satisfaction-refugio readonly>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="satisfaction-label">CALIFICACIÓN</label>
+                            <select name="calificacion_satisfaccion" class="satisfaction-select" required>
+                                <option value="">Selecciona una opción</option>
+                                <option value="EXCELENTE">Excelente</option>
+                                <option value="BUENA">Buena</option>
+                                <option value="REGULAR">Regular</option>
+                                <option value="MALA">Mala</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="satisfaction-label">COMENTARIOS</label>
+                            <textarea name="comentarios_satisfaccion" class="satisfaction-textarea" rows="5" placeholder="Describe tu experiencia..."></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 pb-6">
+                            <button type="button" class="satisfaction-cancel-btn" data-close-satisfaction>Cancelar</button>
+                            <button type="submit" class="satisfaction-submit-btn">Enviar Satisfacción</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

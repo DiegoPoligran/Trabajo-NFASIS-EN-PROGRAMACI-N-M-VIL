@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huellas Pro | Comunidad</title>
+
+    <!-- Preconexiones a Google Fonts para optimizar el rendimiento de carga de fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Importa la fuente "Inter" de Google Fonts con múltiples pesos (300, 400, 500, 600, 700, 800) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Importa Font Awesome 6.4.0 - librería de iconos usada en el sitio -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            blue: '#00A3FF',
+                            dark: '#0B132B',
+                            light: '#FAFAFA',
+                            gray: '#F8FAFC',
+                            text: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body class="min-h-screen flex flex-col" data-page="comunidad">
+    <!-- NAVEGACIÓN: Barra superior con enlaces de navegación y acciones de usuario -->
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="Inicio.html" class="flex items-center gap-2 cursor-pointer">
+                <div class="bg-brand-blue text-white p-1.5 rounded-md text-sm">
+                    <i class="fa-solid fa-paw"></i>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight text-brand-dark">
+                    HUELLAS<span class="text-brand-blue italic font-extrabold">PRO</span>
+                </h1>
+            </a>
+
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="Inicio.html" data-page-link="inicio" class="nav-btn text-gray-500 hover:text-brand-dark transition">Inicio</a>
+                <a href="Adopciones.html" data-page-link="adopciones" class="nav-btn text-gray-500 hover:text-brand-dark transition">Adopciones</a>
+                <a href="Eventos.html" data-page-link="eventos" class="nav-btn text-gray-500 hover:text-brand-dark transition">Eventos</a>
+                <a href="Comunidad.html" data-page-link="comunidad" class="nav-btn text-gray-500 hover:text-brand-dark transition">Comunidad</a>
+                <a href="Educación.html" data-page-link="educacion" class="nav-btn text-gray-500 hover:text-brand-dark transition">Educación</a>
+            </div>
+
+            <div class="flex items-center gap-4 text-sm font-medium">
+                <a href="LoginYUnete.html" data-page-link="login" class="nav-btn text-gray-400 hover:text-gray-800 transition">LOGIN</a>
+                <a href="LoginYUnete.html#unete" class="bg-brand-dark text-white px-5 py-2 rounded-full hover:bg-gray-800 transition shadow-sm">
+                    ÚNETE
+                </a>
+                <div data-lang-toggle class="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-md text-xs cursor-pointer border border-gray-100">
+                    <span class="lang-text">ES</span> <i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 w-full relative">
+        <!-- SECCIÓN DE COMUNIDAD: Contenedor para el foro, categorías y reportes -->
+        <section class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row gap-8" data-community-root data-default-tab="general">
+            <!-- PESTAÑAS DE CATEGORÍA: Menú lateral para filtrar por General, Casos de Éxito, Denuncias, etc. -->
+            <aside class="w-full md:w-64 flex-shrink-0">
+                <div class="bg-white rounded-[2rem] p-4 shadow-sm border border-gray-100 sticky top-24">
+                    <h3 class="font-bold text-brand-dark px-4 mb-4 mt-2">General</h3>
+                    <nav class="space-y-1">
+                        <button class="community-tab w-full text-left px-4 py-2.5 rounded-xl text-sm transition community-active-tab" data-tab="general">General</button>
+                        <button class="community-tab w-full text-left px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:bg-gray-50 transition" data-tab="casos">Casos de Éxito</button>
+                        <button class="community-tab w-full text-left px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:bg-gray-50 transition" data-tab="denuncias">Denuncias</button>
+                        <button class="community-tab w-full text-left px-4 py-2.5 rounded-xl text-sm text-gray-600 hover:bg-gray-50 transition" data-tab="perdidos">Perdidos y Encontrados</button>
+                    </nav>
+                </div>
+            </aside>
+
+            <div class="flex-1 max-w-3xl">
+                <!-- COMPOSER: Área para que los usuarios escriban y publiquen nuevos comentarios -->
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center gap-3 mb-6" data-community-composer>
+                    <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold text-sm flex-shrink-0" data-community-avatar>US</div>
+                    <input type="text" placeholder="Escribe aquí..." class="flex-1 bg-brand-gray border-none rounded-xl px-4 py-2.5 text-sm focus:outline-none" data-community-input>
+                    <button type="button" class="bg-brand-blue text-white w-10 h-10 rounded-xl flex items-center justify-center hover:bg-blue-600 transition shadow-sm" data-community-submit>
+                        <i class="fa-solid fa-paper-plane text-sm"></i>
+                    </button>
+                </div>
+                <!-- CONTENEDOR DE FEEDS: Áreas donde se cargan dinámicamente los posts según la categoría seleccionada -->
+                <div id="feeds-container">
+                    <div id="feed-general" class="community-feed space-y-4" data-feed="general">
+                        <div class="space-y-4" data-community-dynamic-posts></div>
+                    </div>
+
+                    <div id="feed-casos" class="community-feed space-y-4 hidden" data-feed="casos">
+                        <div class="space-y-4" data-community-dynamic-posts></div>
+                    </div>
+
+                    <div id="feed-denuncias" class="community-feed space-y-4 hidden" data-feed="denuncias">
+                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex justify-between items-center mb-2">
+                            <div>
+                                <h3 class="font-bold text-brand-dark">Sección de Denuncias</h3>
+                                <p class="text-xs text-gray-400">Reporta casos de abandono, maltrato o pérdida.</p>
+                            </div>
+                            <button class="bg-brand-dark text-white text-sm font-medium px-5 py-2.5 rounded-xl hover:bg-gray-800 transition" data-open-denuncia-modal>
+                                Crear Denuncia
+                            </button>
+                        </div>
+                        <div class="space-y-4" data-community-dynamic-posts></div>
+                    </div>
+
+                    <div id="feed-perdidos" class="community-feed space-y-4 hidden" data-feed="perdidos">
+                        <div class="space-y-4" data-community-dynamic-posts></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL DE DENUNCIA: Formulario emergente para reportar casos de maltrato o pérdida -->
+    <div class="fixed inset-0 bg-brand-dark/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity" data-denuncia-modal aria-hidden="true">
+        <div class="bg-white rounded-[2rem] w-full max-w-lg shadow-2xl overflow-hidden relative">
+            <div class="p-8">
+                <h2 class="text-2xl font-black text-brand-dark mb-6 tracking-tight">CREAR DENUNCIA</h2>
+
+                <form data-denuncia-form class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <select name="tipo_caso" class="w-full bg-brand-gray border-none rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-brand-blue outline-none" required>
+                            <option value="" disabled selected>Tipo de Caso</option>
+                            <option value="Abandono">Abandono</option>
+                            <option value="Maltrato">Maltrato</option>
+                            <option value="Pérdida">Pérdida</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                        <input type="text" name="ubicacion" placeholder="Ubicación / Barrio" class="w-full bg-brand-gray border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-brand-blue outline-none" required>
+                    </div>
+
+                    <textarea name="descripcion" rows="4" placeholder="Describe los detalles del caso, evidencias o información relevante..." class="w-full bg-brand-gray border-none rounded-xl px-4 py-3 text-sm resize-none focus:ring-2 focus:ring-brand-blue outline-none" required></textarea>
+
+                    <div class="bg-brand-gray rounded-xl p-4 border border-dashed border-gray-200">
+                        <p class="text-[9px] font-bold text-gray-400 uppercase mb-2 tracking-wider">FOTO DE EVIDENCIA (SUBIR DESDE PC)</p>
+                        <div class="flex items-center gap-3">
+                            <input type="file" name="evidencia" accept="image/*,video/*,application/pdf" class="text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-white file:text-brand-dark hover:file:bg-gray-50 cursor-pointer">
+                        </div>
+                    </div>
+
+                    <div class="bg-brand-gray rounded-xl p-4 flex items-center gap-3">
+                        <input type="checkbox" name="anonimo" id="anonimo-checkbox" class="w-4 h-4 text-brand-blue bg-white border-gray-300 rounded focus:ring-brand-blue">
+                        <label for="anonimo-checkbox" class="text-sm font-bold text-brand-dark cursor-pointer">
+                            Publicar como Anónimo <span class="text-gray-400 font-normal text-xs ml-1">(Ocultará tu nombre al público)</span>
+                        </label>
+                    </div>
+
+                    <div class="flex gap-4 pt-4">
+                        <button type="button" class="flex-1 bg-brand-gray text-gray-600 font-bold py-3 rounded-xl hover:bg-gray-200 transition" data-close-denuncia-modal>
+                            Cancelar
+                        </button>
+                        <button type="submit" class="flex-1 bg-brand-dark text-white font-bold py-3 rounded-xl hover:bg-gray-800 transition shadow-sm" data-submit-denuncia-btn>
+                            Publicar Denuncia
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedor invisible para renderizar PDF -->
+    <div id="pdf-container" class="hidden"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

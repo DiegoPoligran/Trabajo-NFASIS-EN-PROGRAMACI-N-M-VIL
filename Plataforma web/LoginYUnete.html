@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huellas Pro | Login y Únete</title>
+
+    <!-- Preconexiones a Google Fonts para optimizar el rendimiento de carga de fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Importa la fuente "Inter" de Google Fonts con múltiples pesos (300, 400, 500, 600, 700, 800) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Importa Font Awesome 6.4.0 - librería de iconos usada en el sitio -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Esta es la vinculación del archivo styles.css que contiene todos los estilos personalizados de la plataforma -->
+  <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            blue: '#00A3FF',
+                            dark: '#0B132B',
+                            light: '#FAFAFA',
+                            gray: '#F8FAFC',
+                            text: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+
+</head>
+<body class="min-h-screen flex flex-col" data-page="login">
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="Inicio.html" class="flex items-center gap-2 cursor-pointer">
+                <div class="bg-brand-blue text-white p-1.5 rounded-md text-sm">
+                    <i class="fa-solid fa-paw"></i>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight text-brand-dark">
+                    HUELLAS<span class="text-brand-blue italic font-extrabold">PRO</span>
+                </h1>
+            </a>
+
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="Inicio.html" data-page-link="inicio" class="nav-btn text-gray-500 hover:text-brand-dark transition">Inicio</a>
+                <a href="Adopciones.html" data-page-link="adopciones" class="nav-btn text-gray-500 hover:text-brand-dark transition">Adopciones</a>
+                <a href="Eventos.html" data-page-link="eventos" class="nav-btn text-gray-500 hover:text-brand-dark transition">Eventos</a>
+                <a href="Comunidad.html" data-page-link="comunidad" class="nav-btn text-gray-500 hover:text-brand-dark transition">Comunidad</a>
+                <a href="Educación.html" data-page-link="educacion" class="nav-btn text-gray-500 hover:text-brand-dark transition">Educación</a>
+            </div>
+
+            <div class="flex items-center gap-4 text-sm font-medium">
+                <a href="LoginYUnete.html#login" data-page-link="login" class="nav-btn text-gray-400 hover:text-gray-800 transition">LOGIN</a>
+                <a href="LoginYUnete.html#unete" class="bg-brand-dark text-white px-5 py-2 rounded-full hover:bg-gray-800 transition shadow-sm">
+                    ÚNETE
+                </a>
+                <div data-lang-toggle class="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-md text-xs cursor-pointer border border-gray-100">
+                    <span class="lang-text">ES</span> <i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 w-full relative">
+        <!-- PANEL DE AUTENTICACIÓN: Contenedor para el cambio entre inicio de sesión y registro -->
+        <section class="max-w-md mx-auto px-6 py-12" data-auth-root>
+            <div class="bg-white rounded-[2rem] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)] w-full p-6 border border-gray-50">
+                <!-- PANEL DE INICIO DE SESIÓN: Formulario para usuarios ya registrados -->
+                <div class="auth-panel" data-panel="login">
+                    <div class="text-center mb-8">
+                        <div class="bg-brand-blue text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                            <i class="fa-solid fa-circle-user"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-brand-dark mb-1">BIENVENIDO</h2>
+                        <p class="text-sm text-gray-400">Ingresa para gestionar tus procesos</p>
+                    </div>
+
+                    <form class="space-y-4 text-left" data-login-form>
+                        <input type="email" name="email" placeholder="Correo Electrónico" class="w-full bg-brand-gray border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/20 transition" required>
+                        <input type="password" name="password" placeholder="Contraseña" class="w-full bg-brand-gray border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/20 transition" required>
+                        <div class="text-right">
+                            <a href="#forgot" class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider hover:text-brand-blue">¿Olvidaste tu contraseña?</a>
+                        </div>
+                        <button type="submit" class="w-full bg-brand-dark text-white rounded-xl py-3.5 font-medium hover:bg-gray-800 transition shadow-lg shadow-brand-dark/20 mt-2">
+                            INICIAR SESIÓN
+                        </button>
+                    </form>
+                </div>
+
+                <!-- PANEL DE RECUPERACIÓN: Formulario para restablecer la contraseña -->
+                <div class="auth-panel auth-panel-hidden" data-panel="forgot">
+                    <div class="text-center mb-8">
+                        <div class="bg-brand-blue text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                            <i class="fa-solid fa-key"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-brand-dark mb-1">RECUPERAR ACCESO</h2>
+                        <p class="text-sm text-gray-400">Ingresa tu correo para restablecer tu cuenta</p>
+                    </div>
+
+                    <form class="space-y-4 text-left" data-forgot-form>
+                        <div data-forgot-step="1">
+                            <input type="email" name="email" placeholder="Correo Electrónico" class="w-full bg-brand-gray border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/20 transition" required>
+                            <button type="submit" class="w-full bg-brand-dark text-white rounded-xl py-3.5 font-medium hover:bg-gray-800 transition shadow-lg shadow-brand-dark/20 mt-4">
+                                VERIFICAR CORREO
+                            </button>
+                        </div>
+
+                        <div data-forgot-step="2" class="hidden space-y-4">
+                            <p class="text-[10px] text-brand-blue font-bold uppercase text-center mb-2">Usuario verificado. Ingresa tu nueva contraseña.</p>
+                            <input type="password" name="newPassword" placeholder="Nueva Contraseña" class="w-full bg-brand-gray border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/20 transition">
+                            <button type="button" class="w-full bg-brand-blue text-white rounded-xl py-3.5 font-medium hover:bg-blue-600 transition shadow-lg shadow-brand-blue/20" data-forgot-reset-btn>
+                                CAMBIAR CONTRASEÑA
+                            </button>
+                        </div>
+                        
+                        <div class="text-center mt-6">
+                            <a href="#login" class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider hover:text-brand-blue">Volver al inicio de sesión</a>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- PANEL DE REGISTRO: Formulario para crear nuevas cuentas (Usuario o Refugio) -->
+                <div class="auth-panel auth-panel-hidden" data-panel="unete">
+                    <h2 class="text-2xl font-bold text-brand-dark mb-8 text-center">ÚNETE A LA RED</h2>
+                    <form class="space-y-4 text-left" data-signup-form>
+                        <input type="text" name="name" placeholder="Nombre" class="w-full bg-brand-gray border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/20 transition" required>
+                        <input type="email" name="email" placeholder="Correo Electrónico" class="w-full bg-brand-gray border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/20 transition" required>
+                        <div>
+                            <label class="block text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-2 ml-1">¿Cómo quieres ayudar?</label>
+                            <div class="relative">
+                                <select name="role" class="w-full bg-brand-gray border border-gray-100 rounded-xl px-4 py-3 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-brand-blue/20 transition text-brand-dark font-medium">
+                                    <option value="usuario">Quiero Adoptar</option>
+                                    <option value="refugio">Soy Refugio</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+                            </div>
+                        </div>
+                        <input type="password" name="password" placeholder="Contraseña" class="w-full bg-brand-gray border border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/20 transition" required>
+                        <button type="submit" class="w-full bg-brand-blue text-white rounded-xl py-3.5 font-medium hover:bg-blue-600 transition shadow-lg shadow-brand-blue/20 mt-4">
+                            ÚNETE
+                        </button>
+                    </form>
+                </div>
+                <p data-auth-message class="mt-5 text-center text-xs font-semibold"></p>
+            </div>
+        </section>
+
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>

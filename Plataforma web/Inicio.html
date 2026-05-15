@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huellas Pro | Inicio</title>
+
+    <!-- Preconexiones a Google Fonts para optimizar el rendimiento de carga de fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Importa la fuente "Inter" de Google Fonts con múltiples pesos (300, 400, 500, 600, 700, 800) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Importa Font Awesome 6.4.0 - librería de iconos usada en el sitio -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Vinculación de estilos personalizados -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Importación de Tailwind CSS para el diseño responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            blue: '#00A3FF',
+                            dark: '#0B132B',
+                            light: '#FAFAFA',
+                            gray: '#F8FAFC',
+                            text: '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+</head>
+
+<body class="min-h-screen flex flex-col" data-page="inicio">
+    <!-- ─── BARRA DE NAVEGACIÓN (HEADER) ─────────────────────────────────── -->
+    <!-- Contiene el logo, enlaces principales de navegación y botones de acceso/idioma -->
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="Inicio.html" class="flex items-center gap-2 cursor-pointer">
+                <div class="bg-brand-blue text-white p-1.5 rounded-md text-sm">
+                    <i class="fa-solid fa-paw"></i>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight text-brand-dark">
+                    HUELLAS<span class="text-brand-blue italic font-extrabold">PRO</span>
+                </h1>
+            </a>
+
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="Inicio.html" data-page-link="inicio"
+                    class="nav-btn text-gray-500 hover:text-brand-dark transition">Inicio</a>
+                <a href="Adopciones.html" data-page-link="adopciones"
+                    class="nav-btn text-gray-500 hover:text-brand-dark transition">Adopciones</a>
+                <a href="Eventos.html" data-page-link="eventos"
+                    class="nav-btn text-gray-500 hover:text-brand-dark transition">Eventos</a>
+                <a href="Comunidad.html" data-page-link="comunidad"
+                    class="nav-btn text-gray-500 hover:text-brand-dark transition">Comunidad</a>
+                <a href="Educación.html" data-page-link="educacion"
+                    class="nav-btn text-gray-500 hover:text-brand-dark transition">Educación</a>
+            </div>
+
+            <div class="flex items-center gap-4 text-sm font-medium">
+                <a href="LoginYUnete.html" data-page-link="login"
+                    class="nav-btn text-gray-400 hover:text-gray-800 transition">LOGIN</a>
+                <a href="LoginYUnete.html#unete"
+                    class="bg-brand-dark text-white px-5 py-2 rounded-full hover:bg-gray-800 transition shadow-sm">
+                    ÚNETE
+                </a>
+                <div data-lang-toggle
+                    class="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-md text-xs cursor-pointer border border-gray-100">
+                    <span class="lang-text">ES</span> <i class="fa-solid fa-chevron-down text-[10px] text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 w-full relative">
+
+        <!-- ─── SECCIÓN HERO (PORTADA) ────────────────────────────────────── -->
+        <!-- Presentación principal del sitio con mensaje de bienvenida y botones de acción -->
+        <section class="max-w-7xl mx-auto px-6 py-10">
+            <div
+                class="hero-bg rounded-[2.5rem] p-12 md:p-20 text-center relative overflow-hidden shadow-xl shadow-brand-dark/10">
+                <i
+                    class="fa-solid fa-dog absolute -right-10 -bottom-20 text-[350px] text-white opacity-[0.03] pointer-events-none"></i>
+                <div class="relative z-10 max-w-3xl mx-auto">
+                    <span
+                        class="inline-block bg-white/10 text-brand-blue text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6 border border-white/5 backdrop-blur-sm">
+                        Plataforma Nacional V2.5
+                    </span>
+                    <h1 class="text-5xl md:text-6xl font-extrabold text-white leading-tight mb-6 tracking-tight">
+                        PROTEGIENDO <br>
+                        <span class="italic text-brand-blue font-light tracking-normal">VIDAS EN COLOMBIA</span>
+                    </h1>
+                    <p class="text-gray-400 text-lg md:text-xl mb-10 max-w-2xl mx-auto font-light">
+                        Centralizamos la ayuda para animales en abandono. Adopciones, eventos de salud y educación
+                        responsable.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <a href="Adopciones.html"
+                            class="bg-brand-blue text-white px-8 py-3.5 rounded-full font-medium hover:bg-blue-500 transition w-full sm:w-auto shadow-lg shadow-brand-blue/20 text-center">
+                            Explorar Adopciones
+                        </a>
+                        <a href="Eventos.html"
+                            class="bg-white/5 text-white border border-white/10 px-8 py-3.5 rounded-full font-medium hover:bg-white/10 transition w-full sm:w-auto backdrop-blur-sm text-center">
+                            Próximos Eventos
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── SECCIÓN DE ESTADÍSTICAS ──────────────────────────────────── -->
+            <!-- Muestra datos relevantes sobre el impacto de la plataforma en cifras -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-8">
+                <div
+                    class="bg-white rounded-3xl p-8 text-center shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <h3 class="text-3xl font-bold text-brand-blue mb-1">1.2k+</h3>
+                    <p class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold">Mascotas Salvadas</p>
+                </div>
+                <div
+                    class="bg-white rounded-3xl p-8 text-center shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <h3 class="text-3xl font-bold text-brand-blue mb-1">45</h3>
+                    <p class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold">Refugios Unidos</p>
+                </div>
+                <div
+                    class="bg-white rounded-3xl p-8 text-center shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <h3 class="text-3xl font-bold text-brand-blue mb-1">890</h3>
+                    <p class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold">Voluntarios Activos</p>
+                </div>
+                <div
+                    class="bg-white rounded-3xl p-8 text-center shadow-sm border border-gray-100 hover:shadow-md transition">
+                    <h3 class="text-3xl font-bold text-brand-blue mb-1">Bogotá</h3>
+                    <p class="text-[10px] uppercase tracking-widest text-gray-400 font-semibold">Sede Principal</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <!-- ─── SCRIPTS DE LA APLICACIÓN ─────────────────────────────────────── -->
+    <!-- Carga de la lógica principal de la plataforma -->
+    <script src="app.js"></script>
+</body>
+
+</html>
