@@ -1,0 +1,7 @@
+{
+  "name": "huellas-pro-ionic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
