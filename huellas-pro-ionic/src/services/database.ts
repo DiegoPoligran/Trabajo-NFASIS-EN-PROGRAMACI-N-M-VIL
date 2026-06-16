@@ -1,18 +1,18 @@
-
 import { reactive } from 'vue';
 
 const DB_KEY = 'huellasPro.db.v1';
 
 // Estado reactivo global
 export const dbState = reactive({
-  data: null
+  data: null as any
 });
 
 // ─── FUNCIONES CORE DE BASE DE DATOS ─────────────────────────────────────
+
 function createDefaultDb() {
   const now = new Date().toISOString();
   const today = now.slice(0, 10);
-  
+
   return {
     version: 1,
     usuario: [
@@ -283,20 +283,18 @@ function getSeedAnimals() {
       estado_publicacion: 'publicado'
     }
   ];
-} 	
-  
+}
 
-
-function ensureDb() {
+function ensureDb(): any {
   const current = readDb(false);
   const baseline = createDefaultDb();
   let db = current || baseline;
-  
+
   // Asegurar que todas las claves existan
   Object.keys(baseline).forEach(key => {
     if (db[key] === undefined) db[key] = baseline[key];
   });
-  
+
   // Asegurar que todos los arrays existan
   const arrayKeys = [
     'usuario', 'perfiles_usuario', 'credenciales_seguridad',
@@ -307,30 +305,30 @@ function ensureDb() {
     'contenido_educativo', 'comentarios_comunidad', 'asistencias_eventos',
     'satisfaccion_formularios'
   ];
-  
+
   arrayKeys.forEach(key => {
     if (!Array.isArray(db[key])) db[key] = [];
   });
-  
+
   // Agregar usuarios seed si no existen
-  baseline.usuario.forEach(seedUser => {
-    if (!db.usuario.some(user => user.ID_usuario === seedUser.ID_usuario)) {
+  baseline.usuario.forEach((seedUser: any) => {
+    if (!db.usuario.some((user: any) => user.ID_usuario === seedUser.ID_usuario)) {
       db.usuario.push(seedUser);
     }
   });
-  
+
   // Agregar animales seed si no existen
-  baseline.animales_adopcion.forEach(seedAnimal => {
-    if (!db.animales_adopcion.some(animal => animal.ID_animal === seedAnimal.ID_animal)) {
+  baseline.animales_adopcion.forEach((seedAnimal: any) => {
+    if (!db.animales_adopcion.some((animal: any) => animal.ID_animal === seedAnimal.ID_animal)) {
       db.animales_adopcion.push(seedAnimal);
     }
   });
-  
+
   saveDb(db);
   return db;
 }
 
-function readDb(ensure = true) {
+function readDb(ensure = true): any {
   try {
     const stored = localStorage.getItem(DB_KEY);
     if (!stored) return ensure ? ensureDb() : null;
@@ -340,71 +338,72 @@ function readDb(ensure = true) {
   }
 }
 
-function saveDb(db) {
+function saveDb(db: any) {
   localStorage.setItem(DB_KEY, JSON.stringify(db));
   // Actualizar estado reactivo
   dbState.data = { ...db };
 }
 
-function encodeCredential(value) {
+function encodeCredential(value: string): string {
   return btoa(unescape(encodeURIComponent(`huellas:${value}`)));
 }
 
-function makeId(prefix) {
+function makeId(prefix: string): string {
   return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
 // ─── SERVICIO PRINCIPAL ──────────────────────────────────────────────
+
 export const DatabaseService = {
   // Inicialización
   init: () => {
     dbState.data = ensureDb();
   },
-  
+
   // Lectura directa (para casos especiales)
-  readDb: () => readDb(),
+  readDb: (): any => readDb(),
 
   saveDb: (db: any) => {
-  localStorage.setItem(DB_KEY, JSON.stringify(db));
-  // Actualizar estado reactivo
-  dbState.data = { ...db };
+    localStorage.setItem(DB_KEY, JSON.stringify(db));
+    // Actualizar estado reactivo
+    dbState.data = { ...db };
   },
-  
+
   // Usuarios
-  getUsuarios: () => dbState.data?.usuario || [],
-  
-  getUsuarioById: (userId) => {
-    return dbState.data?.usuario.find(u => u.ID_usuario === userId);
+  getUsuarios: (): any[] => dbState.data?.usuario || [],
+
+  getUsuarioById: (userId: string): any => {
+    return dbState.data?.usuario.find((u: any) => u.ID_usuario === userId);
   },
-  
+
   // Perfiles
-  getPerfiles: () => dbState.data?.perfiles_usuario || [],
-  
-  getPerfilByUserId: (userId) => {
-    return dbState.data?.perfiles_usuario.find(p => p.ID_usuario === userId);
+  getPerfiles: (): any[] => dbState.data?.perfiles_usuario || [],
+
+  getPerfilByUserId: (userId: string): any => {
+    return dbState.data?.perfiles_usuario.find((p: any) => p.ID_usuario === userId);
   },
-  
+
   // Credenciales
-  getCredenciales: () => dbState.data?.credenciales_seguridad || [],
-  
-  getCredentialByUserId: (userId) => {
-    return dbState.data?.credenciales_seguridad.find(c => c.ID_usuario === userId);
+  getCredenciales: (): any[] => dbState.data?.credenciales_seguridad || [],
+
+  getCredentialByUserId: (userId: string): any => {
+    return dbState.data?.credenciales_seguridad.find((c: any) => c.ID_usuario === userId);
   },
-  
+
   // Animales
-  getAnimales: () => dbState.data?.animales_adopcion || [],
-  
-  getAnimalesDisponibles: () => {
+  getAnimales: (): any[] => dbState.data?.animales_adopcion || [],
+
+  getAnimalesDisponibles: (): any[] => {
     return (dbState.data?.animales_adopcion || []).filter(
-      a => a.estado_publicacion === 'publicado'
+      (a: any) => a.estado_publicacion === 'publicado'
     );
   },
-  
-  getAnimalById: (animalId) => {
-    return dbState.data?.animales_adopcion.find(a => a.ID_animal === animalId);
+
+  getAnimalById: (animalId: string): any => {
+    return dbState.data?.animales_adopcion.find((a: any) => a.ID_animal === animalId);
   },
-  
-  createAnimal: (animalData) => {
+
+  createAnimal: (animalData: any) => {
     const db = readDb();
     const newAnimal = {
       ID_animal: makeId('animal'),
@@ -412,60 +411,64 @@ export const DatabaseService = {
       estado_publicacion: 'publicado',
       fecha_creacion: new Date().toISOString()
     };
+
     db.animales_adopcion.push(newAnimal);
     saveDb(db);
     return newAnimal;
   },
-  
-  updateAnimal: (animalId, updates) => {
+
+  updateAnimal: (animalId: string, updates: any) => {
     const db = readDb();
-    const index = db.animales_adopcion.findIndex(a => a.ID_animal === animalId);
+    const index = db.animales_adopcion.findIndex((a: any) => a.ID_animal === animalId);
+
     if (index === -1) return null;
-    
+
     db.animales_adopcion[index] = {
       ...db.animales_adopcion[index],
       ...updates,
       fecha_actualizacion: new Date().toISOString()
     };
+
     saveDb(db);
     return db.animales_adopcion[index];
   },
-  
-  deleteAnimal: (animalId) => {
+
+  deleteAnimal: (animalId: string) => {
     const db = readDb();
-    const index = db.animales_adopcion.findIndex(a => a.ID_animal === animalId);
+    const index = db.animales_adopcion.findIndex((a: any) => a.ID_animal === animalId);
+
     if (index === -1) return false;
-    
+
     db.animales_adopcion.splice(index, 1);
     saveDb(db);
     return true;
   },
-  
+
   // Solicitudes de adopción
-  getSolicitudes: () => dbState.data?.solicitudes_adopcion || [],
-  
-  getSolicitudesByUsuario: (userId) => {
+  getSolicitudes: (): any[] => dbState.data?.solicitudes_adopcion || [],
+
+  getSolicitudesByUsuario: (userId: string): any[] => {
     return (dbState.data?.solicitudes_adopcion || []).filter(
-      s => s.ID_usuario === userId
+      (s: any) => s.ID_usuario === userId
     );
   },
-  
-  getSolicitudesByRefugio: (refugioId) => {
+
+  getSolicitudesByRefugio: (refugioId: string): any[] => {
     const db = dbState.data;
     if (!db) return [];
-    
+
     // Obtener animales de este refugio
     const animalesRefugio = db.animales_adopcion
-      .filter(a => a.ID_refugio === refugioId)
-      .map(a => a.ID_animal);
-    
+      .filter((a: any) => a.ID_refugio === refugioId)
+      .map((a: any) => a.ID_animal);
+
     // Filtrar solicitudes de esos animales
     return db.solicitudes_adopcion.filter(
-      s => animalesRefugio.includes(s.ID_animal)
+      (s: any) => animalesRefugio.includes(s.ID_animal)
     );
   },
-  
-  crearSolicitud: (userId, animalId, comentarios = '') => {
+
+  crearSolicitud: (userId: string, animalId: string, comentarios = '') => {
     const db = readDb();
     const nuevaSolicitud = {
       ID_solicitud: makeId('sol'),
@@ -476,34 +479,36 @@ export const DatabaseService = {
       comentarios_usuario: comentarios,
       calificacion: 'BUENA'
     };
+
     db.solicitudes_adopcion.push(nuevaSolicitud);
     saveDb(db);
     return nuevaSolicitud;
   },
-  
-  actualizarEstadoSolicitud: (solicitudId, nuevoEstado) => {
+
+  actualizarEstadoSolicitud: (solicitudId: string, nuevoEstado: string) => {
     const db = readDb();
-    const solicitud = db.solicitudes_adopcion.find(s => s.ID_solicitud === solicitudId);
+    const solicitud = db.solicitudes_adopcion.find((s: any) => s.ID_solicitud === solicitudId);
+
     if (!solicitud) return null;
-    
+
     solicitud.estado_solicitud = nuevoEstado;
     saveDb(db);
     return solicitud;
   },
-  
+
   // Favoritos
-  getFavoritos: (userId) => {
+  getFavoritos: (userId: string): any[] => {
     return (dbState.data?.favoritos_intereses || []).filter(
-      f => f.ID_usuario === userId
+      (f: any) => f.ID_usuario === userId
     );
   },
-  
-  agregarFavorito: (userId, animalId) => {
+
+  agregarFavorito: (userId: string, animalId: string) => {
     const db = readDb();
     const existe = db.favoritos_intereses.some(
-      f => f.ID_usuario === userId && f.ID_animal === animalId
+      (f: any) => f.ID_usuario === userId && f.ID_animal === animalId
     );
-    
+
     if (!existe) {
       db.favoritos_intereses.push({
         ID_favorito: makeId('fav'),
@@ -516,13 +521,13 @@ export const DatabaseService = {
     }
     return false;
   },
-  
-  eliminarFavorito: (userId, animalId) => {
+
+  eliminarFavorito: (userId: string, animalId: string) => {
     const db = readDb();
     const index = db.favoritos_intereses.findIndex(
-      f => f.ID_usuario === userId && f.ID_animal === animalId
+      (f: any) => f.ID_usuario === userId && f.ID_animal === animalId
     );
-    
+
     if (index !== -1) {
       db.favoritos_intereses.splice(index, 1);
       saveDb(db);
@@ -530,11 +535,11 @@ export const DatabaseService = {
     }
     return false;
   },
-  
+
   // Denuncias/Reportes
-  getDenuncias: () => dbState.data?.reportes_denuncias || [],
-  
-  crearDenuncia: (denunciaData) => {
+  getDenuncias: (): any[] => dbState.data?.reportes_denuncias || [],
+
+  crearDenuncia: (denunciaData: any) => {
     const db = readDb();
     const nuevaDenuncia = {
       ID_denuncia: makeId('den'),
@@ -542,47 +547,45 @@ export const DatabaseService = {
       fecha_creacion: new Date().toISOString(),
       ...denunciaData
     };
+
     db.reportes_denuncias.push(nuevaDenuncia);
     saveDb(db);
     return nuevaDenuncia;
   },
-  
+
   // Contenido (Campañas, Eventos, Noticias, Educación)
-  getCampanas: () => dbState.data?.campanas || [],
-  
-  getEventos: () => dbState.data?.eventos_refugio || [],
-  
-  getNoticias: () => dbState.data?.noticias_destacadas || [],
-  
-  getContenidoEducativo: () => dbState.data?.contenido_educativo || [],
-  
-  crearContenido: (tipo, contenidoData) => {
+  getCampanas: (): any[] => dbState.data?.campanas || [],
+  getEventos: (): any[] => dbState.data?.eventos_refugio || [],
+  getNoticias: (): any[] => dbState.data?.noticias_destacadas || [],
+  getContenidoEducativo: (): any[] => dbState.data?.contenido_educativo || [],
+
+  crearContenido: (tipo: string, contenidoData: any) => {
     const db = readDb();
-    const tipoMap = {
+    const tipoMap: Record<string, string> = {
       campana: 'campanas',
       evento: 'eventos_refugio',
       noticia: 'noticias_destacadas',
       educacion: 'contenido_educativo'
     };
-    
+
     const collection = tipoMap[tipo];
     if (!collection) return null;
-    
+
     const nuevoContenido = {
       ID_contenido: makeId(tipo),
       fecha_creacion: new Date().toISOString(),
       ...contenidoData
     };
-    
+
     db[collection].push(nuevoContenido);
     saveDb(db);
     return nuevoContenido;
   },
-  
+
   // Comentarios/Comunidad
-  getComentarios: () => dbState.data?.comentarios_comunidad || [],
-  
-  crearComentario: (comentarioData) => {
+  getComentarios: (): any[] => dbState.data?.comentarios_comunidad || [],
+
+  crearComentario: (comentarioData: any) => {
     const db = readDb();
     const nuevoComentario = {
       ID_comentario: makeId('comment'),
@@ -590,44 +593,46 @@ export const DatabaseService = {
       fecha_creacion: new Date().toISOString(),
       ...comentarioData
     };
+
     db.comentarios_comunidad.push(nuevoComentario);
     saveDb(db);
     return nuevoComentario;
   },
-  
+
   // Conversaciones/Mensajes
-  getConversaciones: (userId) => {
+  getConversaciones: (userId: string): any[] => {
     return (dbState.data?.conversaciones || []).filter(
-      c => c.participantes.includes(userId)
+      (c: any) => c.participantes.includes(userId)
     );
   },
-  
-  getMensajes: (conversationId) => {
+
+  getMensajes: (conversationId: string): any[] => {
     return (dbState.data?.mensajes || []).filter(
-      m => m.ID_conversacion === conversationId
+      (m: any) => m.ID_conversacion === conversationId
     );
   },
-  
-  crearMensaje: (mensajeData) => {
+
+  crearMensaje: (mensajeData: any) => {
     const db = readDb();
     const nuevoMensaje = {
       ID_mensaje: makeId('msg'),
       fecha_envio: new Date().toISOString(),
       ...mensajeData
     };
+
     db.mensajes.push(nuevoMensaje);
     saveDb(db);
     return nuevoMensaje;
   },
-  
+
   // Notificaciones
-  getNotificaciones: (userId) => {
+  getNotificaciones: (userId: string): any[] => {
     return (dbState.data?.notificaciones || []).filter(
-      n => n.ID_usuario === userId
+      (n: any) => n.ID_usuario === userId
     );
   },
-  
-  crearNotificacion: (userId, tipo, contenido) => {
+
+  crearNotificacion: (userId: string, tipo: string, contenido: string) => {
     const db = readDb();
     const nuevaNotificacion = {
       ID_notificacion: makeId('notif'),
@@ -637,14 +642,15 @@ export const DatabaseService = {
       leida: false,
       fecha_envio: new Date().toISOString()
     };
+
     db.notificaciones.push(nuevaNotificacion);
     saveDb(db);
     return nuevaNotificacion;
   },
-  
+
   // Utilidades
-  encodeCredential: (value) => encodeCredential(value),
-  makeId: (prefix) => makeId(prefix)
+  encodeCredential: (value: string): string => encodeCredential(value),
+  makeId: (prefix: string): string => makeId(prefix)
 };
 
 // Inicializar al cargar

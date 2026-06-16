@@ -95,7 +95,7 @@
               Mi Perfil
             </button>
             
-            <button class="mobile-menu-item logout" @click="logout; closeMobileMenu()">
+            <button class="mobile-menu-item logout" @click="() => { AuthService.logout(router); closeMobileMenu(); }">
               <ion-icon :icon="logOutOutline"></ion-icon>
               Cerrar Sesión
             </button>
@@ -130,7 +130,7 @@
             <ion-icon :icon="personOutline"></ion-icon>
             Mi Perfil
           </button>
-          <button @click="logout; showUserMenu = false">
+          <button @click="() => { AuthService.logout(router); showUserMenu = false; }">
             <ion-icon :icon="logOutOutline"></ion-icon>
             Cerrar Sesión
           </button>

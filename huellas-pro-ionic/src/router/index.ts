@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { AuthService } from '@/services/auth.service';
+import { AuthService, sessionState } from '@/services/auth.service';
 
 const routes = [
   {
@@ -20,7 +20,7 @@ const routes = [
   {
     path: '/registro',
     name: 'Registro',
-    component: () => import('@/views/Login.vue'), // Reutiliza Login con modo registro
+    component: () => import('@/views/Login.vue'),
     meta: { requiresAuth: false }
   },
   {
@@ -77,7 +77,7 @@ router.beforeEach(async (to, from, next) => {
     return;
   }
 
-  if (!AuthService.sessionState) {
+  if (!sessionState.user) {
     try {
       const { DatabaseService } = await import('@/services/database');
       DatabaseService.init();
@@ -90,7 +90,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
   const isLoggedIn = AuthService.isLoggedIn();
-  const userRole = AuthService.sessionState?.user?.rol_usuario;
+  const userRole = sessionState.user?.rol_usuario;
 
   if (requiresAuth && !isLoggedIn) {
     next('/login');
