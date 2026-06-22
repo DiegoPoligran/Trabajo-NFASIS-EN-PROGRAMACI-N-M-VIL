@@ -144,7 +144,7 @@
                   {{ animal.ciudad }}
                 </span>
                 <span class="badge badge-species">
-                  {{ animal.especie === 'gatos' ? '' : '🐶' }}
+                  {{ animal.especie === 'gatos' ? '🐱' : '🐶' }}
                 </span>
               </div>
 
@@ -194,7 +194,7 @@
 
         <!-- Estado vacío -->
         <div v-else class="empty-state">
-          <div class="empty-emoji"></div>
+          <div class="empty-emoji">😔</div>
           <h3>No encontramos mascotas</h3>
           <p>Prueba ajustar los filtros o la búsqueda</p>
           <button @click="limpiarFiltros" class="reset-button">
@@ -436,6 +436,12 @@ const cerrarDetalle = () => {
 
 const solicitarAdopcion = async () => {
   if (!usuarioActual.value) {
+    const toast = await toastController.create({
+      message: 'Debes iniciar sesión para solicitar adopción',
+      duration: 2000,
+      position: 'bottom'
+    });
+    await toast.present();
     router.push('/login');
     return;
   }
@@ -446,16 +452,23 @@ const solicitarAdopcion = async () => {
     'Solicitud creada desde la ficha de adopción.'
   );
 
-  const alert = await alertController.create({
-    header: '🎉 ¡Solicitud enviada!',
-    message: `Tu solicitud de adopción para ${animalSeleccionado.value.nombre} ha sido enviada. Te contactaremos pronto.`,
-    buttons: ['Entendido']
+  const toast = await toastController.create({
+    message: '🎉 ¡Solicitud enviada! Te contactaremos pronto.',
+    duration: 3000,
+    position: 'bottom',
+    color: 'success'
   });
-  await alert.present();
+  await toast.present();
 };
 
-const toggleFavorito = (animal: any) => {
+const toggleFavorito = async (animal: any) => {
   if (!usuarioActual.value) {
+    const toast = await toastController.create({
+      message: 'Debes iniciar sesión para agregar favoritos',
+      duration: 2000,
+      position: 'bottom'
+    });
+    await toast.present();
     router.push('/login');
     return;
   }
@@ -465,34 +478,85 @@ const toggleFavorito = (animal: any) => {
 
   if (esFavoritoAnimal(animal)) { 
     DatabaseService.eliminarFavorito(userId, animalId);
+    const toast = await toastController.create({
+      message: 'Eliminado de favoritos',
+      duration: 2000,
+      position: 'bottom'
+    });
+    await toast.present();
   } else {
     DatabaseService.agregarFavorito(userId, animalId);
+    const toast = await toastController.create({
+      message: '❤️ Agregado a favoritos',
+      duration: 2000,
+      position: 'bottom',
+      color: 'success'
+    });
+    await toast.present();
   }
 };
 
-const enviarMensaje = () => {
+const enviarMensaje = async () => {
   if (!usuarioActual.value) {
+    const toast = await toastController.create({
+      message: 'Debes iniciar sesión para enviar mensajes',
+      duration: 2000,
+      position: 'bottom'
+    });
+    await toast.present();
     router.push('/login');
     return;
   }
 
   const animal = animalSeleccionado.value;
   if (animal.ID_refugio === usuarioActual.value.ID_usuario) {
-    alert('Esta ficha pertenece a tu refugio.');
+    const toast = await toastController.create({
+      message: 'Esta ficha pertenece a tu refugio',
+      duration: 2000,
+      position: 'bottom'
+    });
+    await toast.present();
     return;
   }
 
-  router.push('/perfil#mensajes');
+  // Crear conversación si no existe
+  const conversaciones = DatabaseService.getConversaciones(usuarioActual.value.ID_usuario);
+  let conversacionExistente = conversaciones.find(c => 
+    c.participantes.includes(animal.ID_refugio)
+  );
+
+  if (!conversacionExistente) {
+    const db = DatabaseService.readDb();
+    const nuevaConversacion = {
+      ID_conversacion: DatabaseService.makeId('conv'),
+      participantes: [usuarioActual.value.ID_usuario, animal.ID_refugio],
+      fecha_creacion: new Date().toISOString(),
+      ultimo_mensaje: ''
+    };
+    db.conversaciones.push(nuevaConversacion);
+    DatabaseService.saveDb(db);
+    conversacionExistente = nuevaConversacion;
+  }
+
+  const toast = await toastController.create({
+    message: '💬 Conversación iniciada. Ve a tu perfil para continuar.',
+    duration: 3000,
+    position: 'bottom',
+    color: 'success'
+  });
+  await toast.present();
+  
+  setTimeout(() => {
+    router.push('/perfil');
+  }, 1500);
 };
 </script>
 
 <style scoped>
-/* Contenido principal */
 .adopciones-content {
   --background: #fafbfc;
 }
 
-/* Hero compacto */
 .hero-compact {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 60px 24px 40px;
@@ -569,7 +633,6 @@ const enviarMensaje = () => {
   margin: 0 0 24px 0;
 }
 
-/* Búsqueda */
 .search-wrapper {
   max-width: 600px;
   margin: 0 auto;
@@ -627,7 +690,6 @@ const enviarMensaje = () => {
   color: #666;
 }
 
-/* Filtros compactos */
 .filters-compact {
   background: white;
   margin: -20px 24px 24px;
@@ -732,7 +794,6 @@ const enviarMensaje = () => {
   font-size: 14px;
 }
 
-/* Sección de mascotas */
 .pets-section {
   padding: 24px;
   max-width: 1280px;
@@ -766,14 +827,12 @@ const enviarMensaje = () => {
   font-weight: 700;
 }
 
-/* Grid 4x2 */
 .pets-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
 
-/* Card de mascota */
 .pet-card {
   background: white;
   border-radius: 16px;
@@ -954,7 +1013,6 @@ const enviarMensaje = () => {
   font-size: 18px;
 }
 
-/* Cuerpo de la card */
 .card-body {
   padding: 16px;
 }
@@ -1040,7 +1098,6 @@ const enviarMensaje = () => {
   font-size: 12px;
 }
 
-/* Estado vacío */
 .empty-state {
   text-align: center;
   padding: 60px 20px;
@@ -1083,7 +1140,6 @@ const enviarMensaje = () => {
   transform: scale(1.05);
 }
 
-/* Modal */
 .detail-modal {
   --background: rgba(0, 0, 0, 0.8);
   --backdrop-opacity: 0.8;
@@ -1172,7 +1228,6 @@ const enviarMensaje = () => {
   color: #667eea;
 }
 
-/* Cuerpo del modal */
 .modal-body {
   padding: 24px;
 }
@@ -1212,7 +1267,6 @@ const enviarMensaje = () => {
   font-size: 24px;
 }
 
-/* Info grid */
 .modal-info-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1253,7 +1307,6 @@ const enviarMensaje = () => {
   font-weight: 700;
 }
 
-/* Historia */
 .modal-story {
   background: #f8f9fa;
   padding: 20px;
@@ -1282,7 +1335,6 @@ const enviarMensaje = () => {
   margin: 0;
 }
 
-/* Acciones */
 .modal-actions {
   display: flex;
   flex-direction: column;
@@ -1352,7 +1404,6 @@ const enviarMensaje = () => {
   font-size: 18px;
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .pets-grid {
     grid-template-columns: repeat(3, 1fr);
