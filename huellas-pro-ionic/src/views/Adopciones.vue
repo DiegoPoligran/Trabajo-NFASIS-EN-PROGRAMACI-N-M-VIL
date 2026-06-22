@@ -310,7 +310,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { alertController } from '@ionic/vue';
+import {
+  alertController,
+  toastController
+} from '@ionic/vue';
 import { 
   IonPage, IonContent, IonIcon, IonModal
 } from '@ionic/vue';
