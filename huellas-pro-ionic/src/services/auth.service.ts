@@ -19,8 +19,9 @@ const ROLE_PERMISSIONS: Record<string, string[]> = {
     'users:manage', 'system:configure'
   ],
   usuario: [
-    'content:view', 'comments:create', 'adoption_requests:manage'
-  ],
+  'content:view', 'comments:create', 'adoption_requests:create',
+  'favorites:manage', 'messages:send', 'profile:edit'
+],
   refugio: [
     'content:view', 'comments:create', 'adoption_requests:manage',
     'shelter_panel:access', 'animals:create', 'animals:edit',
@@ -284,18 +285,43 @@ export const AuthService = {
     return (ROLE_PERMISSIONS[sessionState.user.rol_usuario] || []).includes(permission);
   },
 
-  // Obtener etiqueta del rol
+   canCreateAnimals(): boolean {
+    return this.hasPermission('animals:create');
+  },
+
+  canEditAnimals(): boolean {
+    return this.hasPermission('animals:edit');
+  },
+
+  canPublishAnimals(): boolean {
+    return this.hasPermission('animals:publish');
+  },
+
+  canManageAdoptionRequests(): boolean {
+    return this.hasPermission('adoption_requests:manage');
+  },
+
+  canSendMessages(): boolean {
+    return this.hasPermission('messages:send');
+  },
+
+  canManageFavorites(): boolean {
+    return this.hasPermission('favorites:manage');
+  },
+
   getRoleLabel(role: string): string {
     return roleLabel(role);
   },
 
-  // Obtener iniciales
   getInitials(name: string): string {
     return getInitials(name);
   },
 
-  // Verificar si está logueado
   isLoggedIn(): boolean {
     return sessionState.user !== null;
+  },
+
+  getUserRole(): string {
+    return sessionState.user?.rol_usuario || '';
   }
 };
