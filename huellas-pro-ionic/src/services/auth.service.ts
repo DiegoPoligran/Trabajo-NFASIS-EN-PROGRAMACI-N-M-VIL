@@ -29,6 +29,13 @@ const ROLE_PERMISSIONS: Record<string, string[]> = {
     'news:create', 'education:create'
   ]
 };
+export function can(permission: string): boolean {
+  const role = sessionState.user?.rol_usuario;
+
+  if (!role) return false;
+
+  return ROLE_PERMISSIONS[role]?.includes(permission) || false;
+}
 
 export interface User {
   ID_usuario: string;
