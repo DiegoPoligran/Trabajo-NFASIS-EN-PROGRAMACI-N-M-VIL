@@ -209,7 +209,7 @@ function getSeedAnimals() {
     {
       ID_animal: 'animal_123',
       ID_refugio: 'user_miguel',
-      nombre: '123',
+      nombre: 'Tomate',
       especie: 'perros',
       raza: 'DALGO',
       edad: 'RECIÉN LLEGADO',
@@ -247,7 +247,7 @@ function getSeedAnimals() {
     {
       ID_animal: 'animal_4',
       ID_refugio: 'user_miguel',
-      nombre: '4',
+      nombre: 'Rafiqui',
       especie: 'perros',
       raza: 'CRIOLLO',
       edad: '1 AÑO',
@@ -266,7 +266,7 @@ function getSeedAnimals() {
     {
       ID_animal: 'animal_555',
       ID_refugio: 'user_miguel',
-      nombre: '555',
+      nombre: 'Mufasa',
       especie: 'perros',
       raza: 'CRIOLLO',
       edad: '2 AÑOS',
@@ -279,7 +279,7 @@ function getSeedAnimals() {
       esterilizado: 'Esterilizado',
       imagen: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=400&q=80',
       descripcion: 'Compañero sociable y juguetón.',
-      historia: '555 es noble, juguetón y necesita una familia con tiempo para paseos y rutinas.',
+      historia: 'Mufasa es noble, juguetón y necesita una familia con tiempo para paseos y rutinas.',
       estado_publicacion: 'publicado'
     }
   ];
