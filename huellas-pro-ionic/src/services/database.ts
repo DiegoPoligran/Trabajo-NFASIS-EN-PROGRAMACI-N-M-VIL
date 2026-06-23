@@ -132,7 +132,7 @@ function getSeedAnimals() {
   return [
     {
       ID_animal: 'animal_max',
-      ID_refugio: 'user_miguel',
+      ID_refugio: 'user_diego',
       nombre: 'Max',
       especie: 'perros',
       raza: 'CRIOLLO',
@@ -151,7 +151,7 @@ function getSeedAnimals() {
     },
     {
       ID_animal: 'animal_luna',
-      ID_refugio: 'user_miguel',
+      ID_refugio: 'user_diego',
       nombre: 'Luna',
       especie: 'gatos',
       raza: 'ANGORA',
@@ -170,7 +170,7 @@ function getSeedAnimals() {
     },
     {
       ID_animal: 'animal_simba',
-      ID_refugio: 'user_miguel',
+      ID_refugio: 'user_diego',
       nombre: 'Simba',
       especie: 'perros',
       raza: 'GOLDEN',
@@ -189,7 +189,7 @@ function getSeedAnimals() {
     },
     {
       ID_animal: 'animal_boby',
-      ID_refugio: 'user_miguel',
+      ID_refugio: 'user_diego',
       nombre: 'Boby',
       especie: 'perros',
       raza: 'CRIOLLO',
@@ -208,7 +208,7 @@ function getSeedAnimals() {
     },
     {
       ID_animal: 'animal_123',
-      ID_refugio: 'user_miguel',
+      ID_refugio: 'user_diego',
       nombre: 'Tomate',
       especie: 'perros',
       raza: 'DALGO',
@@ -227,7 +227,7 @@ function getSeedAnimals() {
     },
     {
       ID_animal: 'animal_dragon',
-      ID_refugio: 'user_miguel',
+      ID_refugio: 'user_diego',
       nombre: 'Dragon',
       especie: 'gatos',
       raza: 'CRIOLLO',
@@ -246,7 +246,7 @@ function getSeedAnimals() {
     },
     {
       ID_animal: 'animal_4',
-      ID_refugio: 'user_miguel',
+      ID_refugio: 'user_diego',
       nombre: 'Rafiqui',
       especie: 'perros',
       raza: 'CRIOLLO',
@@ -265,7 +265,7 @@ function getSeedAnimals() {
     },
     {
       ID_animal: 'animal_555',
-      ID_refugio: 'user_miguel',
+      ID_refugio: 'user_diego',
       nombre: 'Mufasa',
       especie: 'perros',
       raza: 'CRIOLLO',
