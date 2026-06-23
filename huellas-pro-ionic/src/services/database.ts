@@ -28,7 +28,7 @@ function createDefaultDb() {
         verificado: true
       },
       {
-        ID_usuario: 'user_Diego',
+        ID_usuario: 'user_diego',
         nombre_completo: 'Diego',
         correo_electronico: 'diegojimenz48@gmail.com',
         telefono: '',
