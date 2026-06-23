@@ -28,8 +28,25 @@
             <div class="event-content">
               <h3>{{ evento.titulo }}</h3>
               <p><ion-icon :icon="locationOutline"></ion-icon> {{ evento.lugar }}</p>
-              <p><ion-icon :icon="timeOutline"></ion-icon></p>
-              <ion-button expand="block">Asistir</ion-button>
+              <p><ion-icon :icon="timeOutline"></ion-icon> {{ evento.fecha }}</p>
+              <ion-button   expand="block"   @click="asistirEvento(evento)">
+                Asistir
+              </ion-button>
+              <ion-button
+                v-if="!estaInscrito(evento.id)"
+                expand="block"
+                @click="asistirEvento(evento)"
+              >Asistir</ion-button>
+
+              <ion-button
+                v-else
+                expand="block"
+                color="success"
+                disabled
+              > Inscrito </ion-button>
+              <p class="attendees">
+              {{ totalAsistentes(evento.id) }} asistentes
+              </p>
             </div>
           </div>
         </div>
@@ -41,6 +58,9 @@
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon } from '@ionic/vue';
 import { locationOutline, timeOutline } from 'ionicons/icons';
+import { DatabaseService } from '@/services/database';
+import { sessionState } from '@/services/auth.service';
+import { toastController } from '@ionic/vue';  
 
 const eventos = [
   {
@@ -80,9 +100,74 @@ const formatDate = (fecha: string) => {
   };
 };
 
-const asistirEvento = (evento: any) => {
-  alert(`Te has inscrito a: ${evento.titulo}`);
+const asistirEvento = async (evento: any) => {
+
+  if (!sessionState.user) {
+    const toast = await toastController.create({
+      message: 'Debes iniciar sesión',
+      duration: 2000,
+      color: 'warning'
+    });
+
+    return toast.present();
+  }
+
+  const db = DatabaseService.readDb();
+
+  const yaInscrito = db.asistencias_eventos.some(
+    (a: any) =>
+      a.ID_usuario === sessionState.user.ID_usuario &&
+      a.ID_evento === evento.id
+  );
+
+  if (yaInscrito) {
+
+    const toast = await toastController.create({
+      message: 'Ya estás inscrito en este evento',
+      duration: 2000,
+      color: 'medium'
+    });
+
+    return toast.present();
+  }
+
+  db.asistencias_eventos.push({
+    ID_asistencia: DatabaseService.makeId('asis'),
+    ID_usuario: sessionState.user.ID_usuario,
+    ID_evento: evento.id,
+    fecha_inscripcion: new Date().toISOString()
+  });
+
+  DatabaseService.saveDb(db);
+
+  const toast = await toastController.create({
+    message: 'Inscripción realizada correctamente',
+    duration: 2000,
+    color: 'success'
+  });
+
+  toast.present();
 };
+const totalAsistentes = (eventoId: number) => {
+
+  const db = DatabaseService.readDb();
+
+  return db.asistencias_eventos.filter(
+    (a: any) => a.ID_evento === eventoId
+  ).length;
+};  
+const estaInscrito = (eventoId: number) => {
+
+  if (!sessionState.user) return false;
+
+  const db = DatabaseService.readDb();
+
+  return db.asistencias_eventos.some(
+    (a: any) =>
+      a.ID_usuario === sessionState.user.ID_usuario &&
+      a.ID_evento === eventoId
+  );
+};  
 </script>
 
 <style scoped>
