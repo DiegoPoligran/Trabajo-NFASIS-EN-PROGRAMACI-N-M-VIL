@@ -11,15 +11,24 @@
         <p>Participa en nuestras actividades y ayuda a más mascotas</p>
         
         <div class="events-grid">
-          <div v-for="i in 3" :key="i" class="event-card">
+          <div
+    v-for="evento in eventos"
+    :key="evento.id"
+    class="event-card"
+  >
             <div class="event-date">
-              <span class="day">15</span>
-              <span class="month">JUN</span>
-            </div>
+  <span>
+    {{ formatDate(evento.fecha).dia }}
+  </span>
+
+  <small>
+    {{ formatDate(evento.fecha).mes }}
+  </small>
+</div>
             <div class="event-content">
-              <h3>Jornada de Adopción</h3>
-              <p><ion-icon :icon="locationOutline"></ion-icon> Parque Principal, Bogotá</p>
-              <p><ion-icon :icon="timeOutline"></ion-icon> 10:00 AM - 4:00 PM</p>
+              <h3>{{ evento.titulo }}</h3>
+              <p><ion-icon :icon="locationOutline"></ion-icon> {{ evento.lugar }}</p>
+              <p><ion-icon :icon="timeOutline"></ion-icon></p>
               <ion-button expand="block">Asistir</ion-button>
             </div>
           </div>
@@ -32,6 +41,48 @@
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon } from '@ionic/vue';
 import { locationOutline, timeOutline } from 'ionicons/icons';
+
+const eventos = [
+  {
+    id: 1,
+    titulo: 'Jornada de Adopción',
+    fecha: '2026-06-15',
+    lugar: 'Parque Simón Bolívar'
+  },
+  {
+    id: 2,
+    titulo: 'Vacunación Gratuita',
+    fecha: '2026-06-16',
+    lugar: 'Parque Nacional'
+  },
+  {
+    id: 3,
+    titulo: 'Feria de Mascotas',
+    fecha: '2026-06-17',
+    lugar: 'Plaza de Bolívar'
+  },
+  {
+    id: 4,
+    titulo: 'Campaña Educativa',
+    fecha: '2026-06-18',
+    lugar: 'Biblioteca Virgilio Barco'
+  }
+];
+
+const formatDate = (fecha: string) => {
+  const d = new Date(fecha);
+
+  return {
+    dia: d.getDate(),
+    mes: d.toLocaleString('es-CO', {
+      month: 'short'
+    }).toUpperCase()
+  };
+};
+
+const asistirEvento = (evento: any) => {
+  alert(`Te has inscrito a: ${evento.titulo}`);
+};
 </script>
 
 <style scoped>
