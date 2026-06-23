@@ -44,6 +44,12 @@ const routes = [
     component: () => import('@/views/Educacion.vue')
   },
   {
+  path: '/favoritos',
+  name: 'Favoritos',
+  component: () => import('@/views/Favoritos.vue'),
+  meta: { requiresAuth: true }
+},
+  {
     path: '/perfil',
     name: 'Perfil',
     component: () => import('@/views/Perfil.vue'),
