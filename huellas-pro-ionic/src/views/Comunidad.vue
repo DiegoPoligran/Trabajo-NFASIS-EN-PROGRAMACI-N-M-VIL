@@ -22,34 +22,133 @@
         </div>
 
         <div class="content-area">
-          <div v-if="activeTab === 'General'" class="placeholder">
-            <ion-icon :icon="chatbubbleEllipsesOutline"></ion-icon>
-            <h3>Foro General</h3>
-            <p>Comparte experiencias y consejos</p>
-          </div>
-          <div v-else-if="activeTab === 'Casos de Éxito'" class="placeholder">
-            <ion-icon :icon="trophyOutline"></ion-icon>
-            <h3>Casos de Éxito</h3>
-            <p>Historias de adopciones felices</p>
-          </div>
-          <div v-else-if="activeTab === 'Denuncias'" class="placeholder">
-            <ion-icon :icon="warningOutline"></ion-icon>
-            <h3>Denuncias</h3>
-            <p>Reporta casos de maltrato</p>
-          </div>
-        </div>
+
+  	   <div v-if="activeTab !== 'Denuncias'">
+
+    	     <textarea
+      		v-model="nuevoMensaje"
+      		placeholder="Escribe tu publicación..."
+      		class="community-input"
+    	     ></textarea>
+
+    	     <button
+      	        class="tab"
+      	        @click="publicarMensaje"
+    	     >
+      Publicar
+    </button>
+
+    <div
+      v-for="comentario in comentarios.filter(c => c.tipo === activeTab)"
+      :key="comentario.ID_comentario"
+      class="post-card"
+    >
+      <strong>{{ comentario.ID_usuario }}</strong>
+
+      <p>
+        {{ comentario.contenido }}
+      </p>
+    </div>
+
+  </div>
+
+  <div v-else>
+
+    <textarea
+      v-model="nuevaDenuncia"
+      placeholder="Describe el caso de maltrato..."
+      class="community-input"
+    ></textarea>
+
+    <button
+      class="tab"
+      @click="crearDenuncia"
+    >
+      Enviar denuncia
+    </button>
+
+    <div
+      v-for="denuncia in denuncias"
+      :key="denuncia.ID_denuncia"
+      class="post-card"
+    >
+      <strong>{{ denuncia.estado }}</strong>
+
+      <p>
+        {{ denuncia.descripcion }}
+      </p>
+    	      </div>
+
+  	   </div>
+
+	</div>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { DatabaseService } from '@/services/database';
+import { sessionState } from '@/services/auth.service';
+import { toastController } from '@ionic/vue';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon } from '@ionic/vue';
 import { chatbubbleEllipsesOutline, trophyOutline, warningOutline } from 'ionicons/icons';
 
 const activeTab = ref('General');
 const tabs = ['General', 'Casos de Éxito', 'Denuncias'];
+const nuevoMensaje = ref('');
+const nuevaDenuncia = ref('');
+
+const comentarios = computed(() =>
+  DatabaseService.getComentarios()
+);
+
+const denuncias = computed(() =>
+  DatabaseService.getDenuncias()
+);
+const publicarMensaje = async () => {
+  if (!nuevoMensaje.value.trim()) return;
+
+  if (!sessionState.user) return;
+
+  DatabaseService.crearComentario({
+    ID_usuario: sessionState.user.ID_usuario,
+    tipo: activeTab.value,
+    contenido: nuevoMensaje.value
+  });
+
+  nuevoMensaje.value = '';
+
+  const toast = await toastController.create({
+    message: 'Publicación realizada',
+    duration: 2000,
+    color: 'success'
+  });
+
+  toast.present();
+};
+
+const crearDenuncia = async () => {
+  if (!nuevaDenuncia.value.trim()) return;
+
+  if (!sessionState.user) return;
+
+  DatabaseService.crearDenuncia({
+    ID_usuario: sessionState.user.ID_usuario,
+    descripcion: nuevaDenuncia.value
+  });
+
+  nuevaDenuncia.value = '';
+
+  const toast = await toastController.create({
+    message: 'Denuncia registrada',
+    duration: 2000,
+    color: 'warning'
+  });
+
+  toast.present();
+};
 </script>
 
 <style scoped>
@@ -128,5 +227,21 @@ const tabs = ['General', 'Casos de Éxito', 'Denuncias'];
 .placeholder p {
   color: #64748b;
   margin: 0;
+}
+.community-input{
+  width:100%;
+  min-height:120px;
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:12px;
+  margin-bottom:16px;
+}
+
+.post-card{
+  margin-top:16px;
+  padding:16px;
+  border:1px solid #eee;
+  border-radius:12px;
+  text-align:left;
 }
 </style>
