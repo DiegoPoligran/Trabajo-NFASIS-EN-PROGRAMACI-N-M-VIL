@@ -19,6 +19,16 @@
         >
           {{ item.label }}
         </button>
+        <!-- BOTÓN DE FAVORITOS (solo si está logueado) -->
+        <button 
+          v-if="user"
+          class="nav-link"
+          :class="{ active: isActive('/favoritos') }"
+          @click="navigateTo('/favoritos')"
+        >
+          <ion-icon :icon="heartOutline" style="margin-right: 4px;"></ion-icon>
+          Favoritos
+        </button>
       </nav>
 
       <!-- Desktop Auth Buttons -->
@@ -77,6 +87,16 @@
             @click="navigateTo(item.path); closeMobileMenu()"
           >
             {{ item.label }}
+          </button>
+          <!-- BOTÓN DE FAVORITOS EN MENÚ MÓVIL (solo si está logueado) -->
+          <button 
+            v-if="user"
+            class="mobile-nav-link"
+            :class="{ active: isActive('/favoritos') }"
+            @click="navigateTo('/favoritos'); closeMobileMenu()"
+          >
+            <ion-icon :icon="heartOutline" style="margin-right: 8px;"></ion-icon>
+            Favoritos
           </button>
         </nav>
 
