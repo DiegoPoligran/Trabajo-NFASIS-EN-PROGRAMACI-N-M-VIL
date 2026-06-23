@@ -20,15 +20,17 @@ const ROLE_PERMISSIONS: Record<string, string[]> = {
   ],
   usuario: [
   'content:view', 'comments:create', 'adoption_requests:create',
-  'favorites:manage', 'messages:send', 'profile:edit'
+  'favorites:manage', 'messages:send', 'profile:edit', 'events:attend'
 ],
   refugio: [
     'content:view', 'comments:create', 'adoption_requests:manage',
-    'shelter_panel:access', 'animals:create', 'animals:edit',
+    'shelter_panel:access', 'animals:create', 'animals:edit', 'animals:publish',
     'adoption_requests:review', 'campaigns:create', 'events:create',
-    'news:create', 'education:create'
+    'news:create', 'education:create', 'messages:send', 'profile:edit',
+    'events:manage'
   ]
 };
+
 export function can(permission: string): boolean {
   const role = sessionState.user?.rol_usuario;
 
